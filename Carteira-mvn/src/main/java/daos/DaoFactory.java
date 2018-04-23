@@ -3,6 +3,9 @@ package daos;
 import usuarios.UsuarioDao;
 import usuarios.UsuarioDaoJdbc;
 
+import Cliente.ClienteDao;
+import Cliente.ClienteDaoJdbc;
+
 public class DaoFactory {
     
     private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -12,6 +15,10 @@ public class DaoFactory {
 
     public static UsuarioDao getCategoriaDao() {
         return new UsuarioDaoJdbc(DRIVER, URL, USER, PASS);
+    }
+    
+     public static ClienteDao getClienteDao() {
+        return new ClienteDaoJdbc(DRIVER, URL, USER, PASS);
     }
     
 }

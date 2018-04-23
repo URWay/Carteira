@@ -4,14 +4,14 @@
  * and open the template in the editor.
  */
 package Cliente;
-
+import daos.DaoException;
 import java.util.List;
 
 /**
  *
  * @author augusto.naraujo
  */
-public interface class ClienteDao {
+public interface ClienteDao {
     List<Cliente> findAll() throws DaoException;
     Cliente insert(Cliente cli) throws DaoException;
     Cliente update(Cliente cli) throws DaoException;
