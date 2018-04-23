@@ -5,6 +5,8 @@
  */
 package Cliente;
 
+import java.util.Date;
+
 /**
  *
  * @author augusto.naraujo
@@ -17,12 +19,28 @@ public class Cliente {
     private String cepCliente;
     private String cpfCliente;
     private String rgCliente;
-    private System.DateTime dtNasc;
+    private Date dtNasc;
     private String sexo;
     private int telCliente;
     private int celCliente;
-    private System.DateTime dtRegistro;
-
+    private Date dtRegistro;
+    
+    
+    public Cliente(int idCliente, String nomeCliente, String sobreCliente, String emailCliente, String cepCliente, String cpfCliente, String rgCliente, Date dtNasc, String sexo, int telCliente, int celCliente, Date dtRegistro) {
+        this.idCliente = idCliente;
+        this.nomeCliente = nomeCliente;
+        this.sobreCliente = sobreCliente;
+        this.emailCliente = emailCliente;
+        this.cepCliente = cepCliente;
+        this.cpfCliente = cpfCliente;
+        this.rgCliente = rgCliente;
+        this.dtNasc = dtNasc;
+        this.sexo = sexo;
+        this.telCliente = telCliente;
+        this.celCliente = celCliente;
+        this.dtRegistro = dtRegistro;
+    }
+        
     public int getIdCliente() {
         return idCliente;
     }
@@ -79,11 +97,11 @@ public class Cliente {
         this.rgCliente = rgCliente;
     }
 
-    public DateTime getDtNasc() {
+    public Date getDtNasc() {
         return dtNasc;
     }
 
-    public void setDtNasc(DateTime dtNasc) {
+    public void setDtNasc(Date dtNasc) {
         this.dtNasc = dtNasc;
     }
 
@@ -111,11 +129,11 @@ public class Cliente {
         this.celCliente = celCliente;
     }
 
-    public DateTime getDtRegistro() {
+    public Date getDtRegistro() {
         return dtRegistro;
     }
 
-    public void setDtRegistro(DateTime dtRegistro) {
+    public void setDtRegistro(Date dtRegistro) {
         this.dtRegistro = dtRegistro;
     }
 

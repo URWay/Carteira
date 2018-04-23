@@ -5,6 +5,8 @@
  */
 package Parceiro;
 
+import java.util.Date;
+
 /**
  *
  * @author augusto.naraujo
@@ -15,7 +17,14 @@ public class Parceiro {
     private String emailParceiro;
     private String razaoParceiro;
     private String cpfParceiro;
-
+    
+    public Parceiro(int idParceiro, String CNPJ, String emailParceiro, String razaoParceiro, String cpfParceiro) {
+        this.idParceiro = idParceiro;
+        this.CNPJ = CNPJ;
+        this.emailParceiro = emailParceiro;
+        this.razaoParceiro = razaoParceiro;
+        this.cpfParceiro = cpfParceiro;
+    }
     public int getIdParceiro() {
         return idParceiro;
     }

@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
@@ -33,11 +34,11 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
                     String cep = rs.getString("cepCliente");
                     String cpf = rs.getString("cpfCliente");
                     String rg = rs.getString("rgCliente");
-                    String dtNasc = rs.getString("dtNasc");
+                    Date dtNasc = rs.getDate("dtNasc");
                     String sexo = rs.getString("sexo");
                     int tel = rs.getInt("telCliente");
                     int cel = rs.getInt("celCliente");
-                    String registro = rs.getString("dtRegistro");
+                    Date registro = rs.getDate("dtRegistro");
                     
                     Cliente clientes = new Cliente(id, nome, sobre, email, cep, cpf, rg, dtNasc, sexo, tel, cel, registro);
                     cliente.add(clientes);

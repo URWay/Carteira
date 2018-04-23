@@ -6,12 +6,12 @@
 package Movimento;
 
 import java.util.List;
-
+import daos.DaoException;
 /**
  *
  * @author augusto.naraujo
  */
-public interface class MovimentoDao {
+public interface MovimentoDao {
     
     List<Movimento> findAll() throws DaoException;
     Movimento insert(Movimento mov) throws DaoException;

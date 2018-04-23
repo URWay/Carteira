@@ -17,8 +17,23 @@ public class DaoFactory {
         return new UsuarioDaoJdbc(DRIVER, URL, USER, PASS);
     }
     
-     public static ClienteDao getClienteDao() {
+    public static ClienteDao getClienteDao() {
         return new ClienteDaoJdbc(DRIVER, URL, USER, PASS);
     }
     
+    public static ParceiroDao getParceiroeDao() {
+        return new ParceiroDaoJdbc(DRIVER, URL, USER, PASS);
+    }
+        
+    public static ParceirosFilialDao getParceirosFilialDao() {
+        return new ParceirosFilialDaoJdbc(DRIVER, URL, USER, PASS);
+    }
+    
+    public static CarteiraDao getCarteiraDao() {
+        return new CarteiraDaoJdbc(DRIVER, URL, USER, PASS);
+    }
+
+    public static MovimentoDao getMovimentoDao() {
+        return new MovimentoDaoJdbc(DRIVER, URL, USER, PASS);
+    }
 }

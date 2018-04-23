@@ -5,6 +5,8 @@
  */
 package Movimento;
 
+import java.util.Date;
+
 /**
  *
  * @author augusto.naraujo
@@ -18,7 +20,7 @@ public class Movimento {
     private double vlBruto;
     private double vlLiquido;
     private double vlDesc;
-    private System.DateTime dtMovimento;
+    private Date dtMovimento;
 
     public int getIdMovimento() {
         return idMovimento;

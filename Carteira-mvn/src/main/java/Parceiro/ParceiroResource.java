@@ -1,4 +1,5 @@
-package Cliente;
+package Parceiro;
+
 
 import daos.DaoException;
 import daos.DaoFactory;
@@ -9,16 +10,16 @@ import javax.ws.rs.GET;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/clientes")
-public class ClienteResource {
+@Path("/parceiros")
+public class ParceiroResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCliente(){
         try{
-            ClienteDao dao = DaoFactory.getClienteDao();
-            List<Cliente> cliente = dao.findAll();
-            return Response.ok(new Clientes(cliente)).build();
+            ParceiroDao dao = DaoFactory.getParceiroDao();
+            List<Parceiro> cliente = dao.findAll();
+            return Response.ok(new Parceiros(cliente)).build();
         } catch(DaoException ex){
             return Response.serverError().entity(ex.getMessage()).build();
         }

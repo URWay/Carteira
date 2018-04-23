@@ -1,17 +1,16 @@
 package Cliente;
 
-import usuarios.*;
 import java.util.List;
 
 public class Clientes {
 
-    private List<Usuario> usuarios;
+    private List<Cliente> clientes;
 
-    public Clientes(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
+    public Clientes(List<Cliente> clientes) {
+        this.clientes = clientes;
     }
     
-    public List<Usuario> getUsuarios() {
-        return usuarios;
+    public List<Cliente> getUsuarios() {
+        return clientes;
     }
 }
