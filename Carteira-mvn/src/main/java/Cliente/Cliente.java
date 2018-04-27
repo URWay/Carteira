@@ -5,6 +5,7 @@
  */
 package Cliente;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -19,14 +20,14 @@ public class Cliente {
     private String cepCliente;
     private String cpfCliente;
     private String rgCliente;
-    private Date dtNasc;
+    private Timestamp dtNasc;
     private String sexo;
     private int telCliente;
     private int celCliente;
-    private Date dtRegistro;
+    private Timestamp dtRegistro;
     
     
-    public Cliente(int idCliente, String nomeCliente, String sobreCliente, String emailCliente, String cepCliente, String cpfCliente, String rgCliente, Date dtNasc, String sexo, int telCliente, int celCliente, Date dtRegistro) {
+    public Cliente(int idCliente, String nomeCliente, String sobreCliente, String emailCliente, String cepCliente, String cpfCliente, String rgCliente, Timestamp dtNasc, String sexo, int telCliente, int celCliente, Timestamp dtRegistro) {
         this.idCliente = idCliente;
         this.nomeCliente = nomeCliente;
         this.sobreCliente = sobreCliente;
@@ -101,7 +102,7 @@ public class Cliente {
         return dtNasc;
     }
 
-    public void setDtNasc(Date dtNasc) {
+    public void setDtNasc(Timestamp dtNasc) {
         this.dtNasc = dtNasc;
     }
 
@@ -133,7 +134,7 @@ public class Cliente {
         return dtRegistro;
     }
 
-    public void setDtRegistro(Date dtRegistro) {
+    public void setDtRegistro(Timestamp dtRegistro) {
         this.dtRegistro = dtRegistro;
     }
 

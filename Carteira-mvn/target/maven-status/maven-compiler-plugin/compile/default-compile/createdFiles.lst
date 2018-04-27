@@ -1,9 +1,0 @@
-usuarios\Usuarios.class
-daos\DaoException.class
-org\netbeans\rest\application\config\ApplicationConfig.class
-daos\DaoFactory.class
-daos\DaoJdbc.class
-usuarios\Usuario.class
-usuarios\UsuarioDaoJdbc.class
-usuarios\UsuarioResource.class
-usuarios\UsuarioDao.class

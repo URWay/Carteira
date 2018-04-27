@@ -13,6 +13,6 @@ import java.util.List;
  */
 public interface ClienteDao {
     List<Cliente> findAll() throws DaoException;
-    Cliente insert(Cliente cli) throws DaoException;
-    Cliente update(Cliente cli) throws DaoException;
+    Cliente insert(String cli) throws DaoException;
+    Cliente update(String cli) throws DaoException;
 }
