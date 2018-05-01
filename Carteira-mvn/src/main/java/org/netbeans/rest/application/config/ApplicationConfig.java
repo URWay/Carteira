@@ -3,6 +3,10 @@ package org.netbeans.rest.application.config;
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
+import nocash.Cliente.ClienteResource;
+import nocash.Parceiro.ParceiroResource;
+import nocash.usuarios.UsuarioResource;
+
 @javax.ws.rs.ApplicationPath("wb")
 public class ApplicationConfig extends Application {
 
@@ -14,9 +18,9 @@ public class ApplicationConfig extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(Cliente.ClienteResource.class);
-        resources.add(Parceiro.ParceiroResource.class);
-        resources.add(usuarios.UsuarioResource.class);
+        resources.add(nocash.Cliente.ClienteResource.class);
+        resources.add(nocash.Parceiro.ParceiroResource.class);
+        resources.add(nocash.usuarios.UsuarioResource.class);
     }
     
 }
