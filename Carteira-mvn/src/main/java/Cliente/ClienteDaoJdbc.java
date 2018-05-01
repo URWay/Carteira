@@ -68,7 +68,7 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
    // @Produces(MediaType.APPLICATION_JSON)
  //   @Consumes(MediaType.APPLICATION_JSON)
     @Override
-    public Cliente inserir(String content) throws Exception{
+    public boolean insert(String content) throws Exception{
         JSONObject object = new JSONObject(content);        
         String nomeCliente = object.getString("nomeCliente");
         String sobreCliente = object.getString("sobreCliente");
@@ -122,12 +122,6 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
                 ps.setInt(9, telCliente);
                 ps.setInt(10, celCliente);
                 ps.setTimestamp(11, dtRegistro);
-                
-             // if(ps.executeUpdate() > 0){
-              //      return Response.status(200).entity(cliente).build();
-               // } else {
-                 //   return Response.status(404).build();
-                //}
 
             } catch(SQLException 
                     ex){
@@ -137,14 +131,14 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
         } catch(Exception ex){
             throw new DaoException(ex);
         }      
-        return cliente;
+        return true;
     }
     
   //  @PUT
    // @Path("/update")
     //@Consumes(MediaType.APPLICATION_JSON)
     @Override
-    public Cliente update(String content) throws Exception{
+    public boolean update(String content) throws Exception{
         // Verificar se jÃ¡ exite email igual
        
             JSONObject object = new JSONObject(content); 
@@ -198,20 +192,12 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
             ps.setTimestamp(11, dtRegistro);
             ps.setInt(12, idCliente);
             ResultSet rs = ps.executeQuery();
-            
-           // if(rs != null){
-             //   if(rs.next()){
-               //     return Response.ok().build();
-                //}else {
-                 //   return Response.status(204).build();
-              //  }
-            //}   
-            
+                        
        } catch(Exception ex){
           throw ex;
        }
         
-        return cliente;
+        return true;
     }
     
   

@@ -30,7 +30,7 @@ public class ClienteResource {
     //@Path("/inserir")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getCliente(){
+    public Response insecCliente(){
         try{
             ClienteDao dao = DaoFactory.getClienteDao();
             List<Cliente> cliente = dao.findAll();
