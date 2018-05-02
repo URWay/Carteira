@@ -1,7 +1,5 @@
 package nocash.Cliente;
 
-import nocash.daos.DaoException;
-import nocash.daos.DaoJdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+
+import nocash.daos.DaoException;
+import nocash.daos.DaoJdbc;
+
 import org.codehaus.jettison.json.JSONObject;
 
 public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
@@ -25,20 +27,22 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
         
         try {
             try (Connection conn = getConnection();
-                    PreparedStatement stmt = conn.prepareStatement("select * from Cliente order by nome");
+                    PreparedStatement stmt = conn.prepareStatement("select * from Cliente order by nomeCliente");
                     ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     int id = rs.getInt("idCliente");
+                    int tel = rs.getInt("telCliente");
+                    int cel = rs.getInt("celCliente");
+                    
                     String nome = rs.getString("nomeCliente");
                     String sobre = rs.getString("sobreCliente");
                     String email = rs.getString("emailCliente");
                     String cep = rs.getString("cepCliente");
                     String cpf = rs.getString("cpfCliente");
                     String rg = rs.getString("rgCliente");
-                    Timestamp dtNasc = rs.getTimestamp("dtNasc");
                     String sexo = rs.getString("sexo");
-                    int tel = rs.getInt("telCliente");
-                    int cel = rs.getInt("celCliente");
+                    
+                    Timestamp dtNasc = rs.getTimestamp("dtNasc");
                     Timestamp registro = rs.getTimestamp("dtRegistro");
                     
                     Cliente clientes = new Cliente(id, nome, sobre, email, cep, cpf, rg, dtNasc, sexo, tel, cel, registro, "", "");
