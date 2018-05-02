@@ -205,5 +205,36 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
         return true;
     }
     
+    @Override
+    public Cliente logar(String email, String senha) throws Exception{
+        
+        Cliente cliente = new Cliente(0, "", "", "", "", "", "", null, "", 0, 0, null);
+        
+        try (Connection conn = getConnection()) {
+                PreparedStatement stmt = conn.prepareStatement("select top(1) * from Cliente where emailCliente = ? AND senha = ?");
+                stmt.setString(1, email);
+                stmt.setString(2, senha);
+                ResultSet rs = stmt.executeQuery();
+                
+                while (rs.next()) {
+                    int id = rs.getInt("idCliente");
+                    String nome = rs.getString("nomeCliente");
+                    String sobre = rs.getString("sobreCliente");
+                    String emailB    = rs.getString("emailCliente");
+                    String cep = rs.getString("cepCliente");
+                    String cpf = rs.getString("cpfCliente");
+                    String rg = rs.getString("rgCliente");
+                    Timestamp dtNasc = rs.getTimestamp("dtNasc");
+                    String sexo = rs.getString("sexo");
+                    int tel = rs.getInt("telCliente");
+                    int cel = rs.getInt("celCliente");
+                    Timestamp registro = rs.getTimestamp("dtRegistro");       
+                }
+            
+        
+        return cliente;
+        }
+    }
+    
   
 }

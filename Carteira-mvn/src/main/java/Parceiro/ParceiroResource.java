@@ -15,7 +15,7 @@ public class ParceiroResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCliente(){
+    public Response getParceiro(){
         try{
             ParceiroDao dao = DaoFactory.getParceiroDao();
             List<Parceiro> cliente = dao.findAll();

@@ -21,7 +21,7 @@ public class DaoFactory {
         return new ClienteDaoJdbc(DRIVER, URL, USER, PASS);
     }
     
-    public static ParceiroDao getParceiroeDao() {
+    public static ParceiroDao getParceiroDao() {
         return new ParceiroDaoJdbc(DRIVER, URL, USER, PASS);
     }
         

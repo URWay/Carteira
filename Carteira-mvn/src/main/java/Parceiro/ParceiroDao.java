@@ -11,9 +11,8 @@ import java.util.List;
  *
  * @author augusto.naraujo
  */
-public interface ParceiroDao {
-    
+public interface ParceiroDao {   
     List<Parceiro> findAll() throws DaoException;
-    Parceiro insert(Parceiro par) throws DaoException;
-    Parceiro update(Parceiro par) throws DaoException;
+    boolean insert(String par) throws Exception;
+    boolean update(String par) throws Exception;
 }

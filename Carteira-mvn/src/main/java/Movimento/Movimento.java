@@ -5,6 +5,7 @@
  */
 package Movimento;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -20,7 +21,7 @@ public class Movimento {
     private double vlBruto;
     private double vlLiquido;
     private double vlDesc;
-    private Date dtMovimento;
+    private Timestamp dtMovimento;
 
     public int getIdMovimento() {
         return idMovimento;
@@ -86,11 +87,11 @@ public class Movimento {
         this.vlDesc = vlDesc;
     }
 
-    public DateTime getDtMovimento() {
+    public Timestamp getDtMovimento() {
         return dtMovimento;
     }
 
-    public void setDtMovimento(DateTime dtMovimento) {
+    public void setDtMovimento(Timestamp dtMovimento) {
         this.dtMovimento = dtMovimento;
     }
 }
