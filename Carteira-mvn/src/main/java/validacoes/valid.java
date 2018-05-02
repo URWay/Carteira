@@ -1,14 +1,7 @@
 package validacoes;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import nocash.Cliente.Cliente;
-import nocash.daos.DaoException;
 
 import nocash.daos.DaoJdbc;
 
