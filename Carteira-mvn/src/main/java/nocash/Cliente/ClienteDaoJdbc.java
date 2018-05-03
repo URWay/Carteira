@@ -6,11 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import nocash.daos.DaoException;
 import nocash.daos.DaoJdbc;
+import org.codehaus.jettison.json.JSONException;
 
 import org.codehaus.jettison.json.JSONObject;
 
@@ -42,10 +45,15 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
                     String rg = rs.getString("rgCliente");
                     String sexo = rs.getString("sexo");
                     
-                    Timestamp dtNasc = rs.getTimestamp("dtNasc");
-                    Timestamp registro = rs.getTimestamp("dtRegistro");
+                    Date dtNasc = rs.getDate("dtNasc");
+                    Date registro = rs.getDate("dtRegistro");
                     
-                    Cliente clientes = new Cliente(id, nome, sobre, email, cep, cpf, rg, dtNasc, sexo, tel, cel, registro, "", "");
+                    String senha = rs.getString("senha");
+                    
+                    System.out.println(registro);
+                    System.out.println(dtNasc);
+                    
+                    Cliente clientes = new Cliente(id, nome, sobre, email, cep, cpf, rg, dtNasc, sexo, tel, cel, registro, senha, "");
                     cliente.add(clientes);
                 }
             }
@@ -77,9 +85,9 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
             
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             java.sql.Date data = (java.sql.Date) sdf.parse(dtRegistroS);
-            Timestamp dtRegistro = new Timestamp(data.getTime());
+            Date dtRegistro = new Date(data.getTime());
             data = (java.sql.Date) sdf.parse(dtNascS);
-            Timestamp dtNasc = new Timestamp(data.getTime());
+            Date dtNasc = new Date(data.getTime());
             
             Cliente cliente = new Cliente(0, nomeCliente, sobreCliente, emailCliente, cepCliente, cpfCliente, rgCliente, dtNasc,sexo,telCliente,celCliente,dtRegistro, senha, "");
             
@@ -112,11 +120,11 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
                 ps.setString(4, cepCliente);
                 ps.setString(5, cpfCliente);
                 ps.setString(6, rgCliente);
-                ps.setTimestamp(7, dtNasc);
+                ps.setDate(7, dtNasc);
                 ps.setString(8, sexo);
                 ps.setInt(9, telCliente);
                 ps.setInt(10, celCliente);
-                ps.setTimestamp(11, dtRegistro);
+                ps.setDate(11, dtRegistro);
                 
                 if (ps.executeUpdate() == 0) {
                     throw new SQLException("Nenhum registro inserido!");
@@ -161,9 +169,9 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
             String dtRegistroS = object.getString("dtRegistro");
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             java.sql.Date data = (java.sql.Date) sdf.parse(dtRegistroS);
-            Timestamp dtRegistro = new Timestamp(data.getTime());
+            Date dtRegistro = new Date(data.getTime());
             data = (java.sql.Date) sdf.parse(dtNascS);
-            Timestamp dtNasc = new Timestamp(data.getTime());
+            Date dtNasc = new Date(data.getTime());
         
             Cliente cliente = new Cliente(idCliente, nomeCliente, sobreCliente, emailCliente, cepCliente, cpfCliente, rgCliente, dtNasc,sexo,telCliente,celCliente,dtRegistro, "", "");
             
@@ -195,11 +203,11 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
                 ps.setString(4, cepCliente);
                 ps.setString(5, cpfCliente);
                 ps.setString(6, rgCliente);
-                ps.setTimestamp(7, dtNasc);
+                ps.setDate(7, dtNasc);
                 ps.setString(8, sexo);
                 ps.setInt(9, telCliente);
                 ps.setInt(10, celCliente);
-                ps.setTimestamp(11, dtRegistro);
+                ps.setDate(11, dtRegistro);
                 ps.setInt(12, idCliente);
                 
                 if(ps.executeUpdate() <= 0){
@@ -217,10 +225,15 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
     }
     
     @Override
-    public Cliente Login(String email, String senha) throws DaoException {
+    public Cliente Login(String content) throws DaoException {
         
         Cliente cliente = new Cliente(0, "", "", "", "", "", "", null, "", 0, 0, null, "", "");
         try {
+            
+            JSONObject object = new JSONObject(content); 
+            String email = object.getString("emailCliente");
+            String senha = object.getString("senhaCliente");
+            
             try (Connection conn = getConnection()) {
                     PreparedStatement stmt = conn.prepareStatement("select top(1) * from Cliente where emailCliente = ? AND senha = ?");
                     stmt.setString(1, email);
@@ -234,17 +247,19 @@ public class ClienteDaoJdbc extends DaoJdbc implements ClienteDao {
                         String cep = rs.getString("cepCliente");
                         String cpf = rs.getString("cpfCliente");
                         String rg = rs.getString("rgCliente");
-                        Timestamp dtNasc = rs.getTimestamp("dtNasc");
+                        Date dtNasc = rs.getDate("dtNasc");
                         String sexo = rs.getString("sexo");
                         int tel = rs.getInt("telCliente");
                         int cel = rs.getInt("celCliente");
-                        Timestamp registro = rs.getTimestamp("dtRegistro");
+                        Date registro = rs.getDate("dtRegistro");
 
                         cliente = new Cliente(id, nome, sobre, email, cep, cpf, rg, dtNasc,sexo,tel,cel,registro, "", "");
                     }
             }
         } catch(ClassNotFoundException | SQLException ex) {
             throw new DaoException(ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(ClienteDaoJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return cliente;

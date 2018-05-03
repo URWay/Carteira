@@ -56,10 +56,10 @@ public class ClienteResource {
     @POST
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response Login(String email, String senha) {
+    public Response Login(String content) {
         try {
             ClienteDao dao = DaoFactory.getClienteDao();
-            Cliente cliente = dao.Login(email, senha);
+            Cliente cliente = dao.Login(content);
             return Response.ok(cliente).build();
         } catch(DaoException ex){
             return Response.serverError().entity(ex.getMessage()).build();

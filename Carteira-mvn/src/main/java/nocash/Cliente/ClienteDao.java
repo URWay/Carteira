@@ -5,7 +5,7 @@ import java.util.List;
 public interface ClienteDao {
     List<Cliente> findAll() throws DaoException;
     
-    Cliente Login(String email, String senha) throws DaoException;
+    Cliente Login(String content) throws DaoException;
     
     void insert(String content) throws Exception;
     

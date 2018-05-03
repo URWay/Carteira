@@ -1,7 +1,6 @@
 package nocash.Cliente;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.sql.Date;
 import validacoes.valid;
 
 public class Cliente {
@@ -12,15 +11,15 @@ public class Cliente {
     private String cepCliente;
     private String cpfCliente;
     private String rgCliente;
-    private Timestamp dtNasc;
+    private Date dtNasc;
     private String sexo;
     private int telCliente;
     private int celCliente;
-    private Timestamp dtRegistro;
+    private Date dtRegistro;
     public String senha;
     public String data;
     
-    public Cliente(int idCliente, String nomeCliente, String sobreCliente, String emailCliente, String cepCliente, String cpfCliente, String rgCliente, Timestamp dtNasc, String sexo, int telCliente, int celCliente, Timestamp dtRegistro, String senha, String data) {
+    public Cliente(int idCliente, String nomeCliente, String sobreCliente, String emailCliente, String cepCliente, String cpfCliente, String rgCliente, Date dtNasc, String sexo, int telCliente, int celCliente, Date dtRegistro, String senha, String data) {
         this.idCliente = idCliente;
         this.nomeCliente = nomeCliente;
         this.sobreCliente = sobreCliente;
@@ -97,7 +96,7 @@ public class Cliente {
         return dtNasc;
     }
 
-    public void setDtNasc(Timestamp dtNasc) {
+    public void setDtNasc(Date dtNasc) {
         this.dtNasc = dtNasc;
     }
 
@@ -129,7 +128,7 @@ public class Cliente {
         return dtRegistro;
     }
 
-    public void setDtRegistro(Timestamp dtRegistro) {
+    public void setDtRegistro(Date dtRegistro) {
         this.dtRegistro = dtRegistro;
     }
 
