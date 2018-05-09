@@ -54,13 +54,15 @@ public class ClienteResource {
     }
     
     @POST
-    @Path("/login")
+    @Path("login")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response Login(String content) {
         try {
+        	System.out.println(content);
             ClienteDao dao = DaoFactory.getClienteDao();
             Cliente cliente = dao.Login(content);
-            return Response.ok(cliente).build();
+            return Response.ok(cliente).header("Access-Control-Allow-Origin", "*").build();
         } catch(DaoException ex){
             return Response.serverError().entity(ex.getMessage()).build();
         }
