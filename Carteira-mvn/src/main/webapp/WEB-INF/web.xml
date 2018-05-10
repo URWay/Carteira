@@ -13,24 +13,30 @@
   
   
   <servlet>
-		<servlet-name>jersey-serlvet</servlet-name>
-		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>nocash</param-value>
-		</init-param>
-		<init-param>
-	        <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
-	        <param-value>true</param-value>
-	    </init-param>
+    <servlet-name>jersey-serlvet</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        
+        <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>nocash</param-value>
+	</init-param>
+	
+        <init-param>
+            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+	    <param-value>true</param-value>
+	</init-param>
+        
+        <init-param>
+            <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+            <param-value>nocash.CORSResponseFilter</param-value>
+        </init-param>
 		
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+	<load-on-startup>1</load-on-startup>
+    </servlet>
 
-	<servlet-mapping>
-		<servlet-name>jersey-serlvet</servlet-name>
-		<url-pattern>/ws/*</url-pattern>
-	</servlet-mapping>
-  
+    <servlet-mapping>
+        <servlet-name>jersey-serlvet</servlet-name>
+        <url-pattern>/ws/*</url-pattern>
+    </servlet-mapping>
   
 </web-app>
