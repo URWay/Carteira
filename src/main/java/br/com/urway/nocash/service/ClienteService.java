@@ -51,5 +51,47 @@ public class ClienteService {
         
         return Response.ok(clientes).build();
     }
+    /*
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response inserirCliente(String content) throws Exception {
+        try{
+            ClienteDao dao = DaoFactory.getClienteDao();
+            dao.insert(content);
+            return Response.ok().build();
+        } catch(DaoException ex){
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+    }
+    
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateCliente(String content) throws Exception {
+        try {
+            ClienteDao dao = DaoFactory.getClienteDao();
+            dao.update(content);
+            return Response.ok().build();
+        } catch(DaoException ex){
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+    }
+    
+    @POST
+    @Path("login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response Login(String content) {
+        try {
+        	System.out.println(content);
+            ClienteDao dao = DaoFactory.getClienteDao();
+            Cliente cliente = dao.Login(content);
+            return Response.ok(cliente).header("Access-Control-Allow-Origin", "*").build();
+        } catch(DaoException ex){
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+    }
+    */
 
 }
