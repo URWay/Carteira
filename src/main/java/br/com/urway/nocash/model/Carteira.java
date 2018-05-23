@@ -5,7 +5,6 @@ public class Carteira {
     private Cliente cliente;
     private double saldo;
     private String nome;
-    private String canal;
     private String senha;
     private short senhaOpcional;
 
@@ -56,13 +55,5 @@ public class Carteira {
 
     public void setSenha(String senha) {
             this.senha = senha;
-    }
-
-    public String getCanal() {
-            return canal;
-    }
-
-    public void setCanal(String canal) {
-            this.canal = canal;
     }
 }
