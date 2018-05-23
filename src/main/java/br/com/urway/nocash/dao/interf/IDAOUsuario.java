@@ -3,7 +3,6 @@
  */
 package br.com.urway.nocash.dao.interf;
 
-import java.util.List;
 
 import br.com.urway.nocash.model.Usuario;
 
@@ -21,7 +20,7 @@ public interface IDAOUsuario extends IDAO<Usuario> {
 	 *            novo nome
 	 * @throws Exception
 	 */
-	public void atualizarNome(Long usuarioID, String nome) throws Exception;
+	public void atualizarNome(int usuarioID, String nome) throws Exception;
 
 	/**
 	 * Altera a senha do usuário
@@ -32,7 +31,7 @@ public interface IDAOUsuario extends IDAO<Usuario> {
 	 *            nova senha
 	 * @throws Exception
 	 */
-	public void alterarSenha(Long usuarioID, String passwordNew) throws Exception;
+	public void alterarSenha(int usuarioID, String passwordNew) throws Exception;
 
 	/**
 	 * Reseta a senha do usuário
@@ -41,7 +40,7 @@ public interface IDAOUsuario extends IDAO<Usuario> {
 	 *            id do usuario
 	 * @throws Exception
 	 */
-	public void resetarSenha(Long usuarioID) throws Exception;
+	public void resetarSenha(int usuarioID) throws Exception;
 
 	/**
 	 * Insere novo usuário

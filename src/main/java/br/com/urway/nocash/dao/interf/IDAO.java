@@ -43,7 +43,7 @@ public interface IDAO<T> {
      * @param id
      *            o id do elemento a excluir
      */
-    public void excluir(long id) throws Exception;
+    public void excluir(int id) throws Exception;
 
     /**
      * Obtém um elemento pelo ID
@@ -51,5 +51,5 @@ public interface IDAO<T> {
      * @param id
      *            o id do elemento a excluir
      */
-    public T obter(Long id) throws Exception;
+    public T obter(int id) throws Exception;
 }

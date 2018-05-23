@@ -5,11 +5,9 @@
  */
 package br.com.urway.nocash.dao.interf;
 
-import br.com.urway.nocash.model.Cliente;
-import java.util.List;
+import br.com.urway.nocash.model.Movimento;
 
-public interface IDAOCliente extends IDAO<Cliente> {
 
-    public Cliente Login(Cliente cliente) throws Exception;
-
+public interface IDAOMovimento extends IDAO<Movimento> {
+    
 }

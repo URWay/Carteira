@@ -6,7 +6,6 @@ public class Movimento {
     private int id;
     private Carteira carteiraOrigem;
     private Carteira carteiraDestino;
-    private String acao;
     private String nrDocumento;
     private double vlBruto;
     private double vlLiquido;
@@ -35,14 +34,6 @@ public class Movimento {
 
     public void setCarteiraDestino(Carteira carteiraDestino) {
         this.carteiraDestino = carteiraDestino;
-    }
-
-    public String getAcao() {
-        return acao;
-    }
-
-    public void setAcao(String acao) {
-        this.acao = acao;
     }
 
     public String getNrDocumento() {
