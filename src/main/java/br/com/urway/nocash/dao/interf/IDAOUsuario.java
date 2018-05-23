@@ -12,19 +12,6 @@ import br.com.urway.nocash.model.Usuario;
 public interface IDAOUsuario extends IDAO<Usuario> {
 
 	/**
-	 * Procura por elementos que atendam aos critérios (usado para realizar
-	 * autenticação de usuário)
-	 * 
-	 * @param username
-	 *            o username do usuário
-	 * @param password
-	 *            o password do usuário
-	 * @return Usuario objeto do usuário, caso encontrado
-	 * @throws Exception
-	 */
-	public Usuario procuraUsuarioPassword(String username, String password) throws Exception;
-
-	/**
 	 * Atualiza nome do usuario
 	 * 
 	 * @param usuarioID

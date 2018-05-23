@@ -3,7 +3,7 @@ package br.com.urway.nocash.model;
 public class Carteira {
     private int id;
     private Cliente cliente;
-    private int saldo;
+    private double saldo;
     private String nome;
     private String canal;
     private String senha;
@@ -26,11 +26,11 @@ public class Carteira {
         this.cliente = cliente;
     }
     
-    public int getSaldo() {
+    public double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(int saldo) {
+    public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
 
