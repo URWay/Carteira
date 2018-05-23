@@ -5,9 +5,11 @@ br\com\urway\nocash\model\Parceiro.class
 br\com\urway\nocash\model\Usuario.class
 br\com\urway\nocash\model\Configuracao.class
 br\com\urway\nocash\dao\interf\IDAO.class
+br\com\urway\nocash\service\CarteiraService.class
 br\com\urway\nocash\model\Cliente.class
 br\com\urway\nocash\model\PermissaoCargo.class
 br\com\urway\nocash\model\ParceiroFilial.class
+br\com\urway\nocash\dao\interf\IDAOCarteira.class
 br\com\urway\nocash\service\ClienteService.class
 br\com\urway\nocash\model\Filial.class
 br\com\urway\nocash\model\ConfiguracaoUsuario.class
@@ -18,6 +20,7 @@ br\com\urway\nocash\model\Permissao.class
 br\com\urway\nocash\service\UsuarioService.class
 br\com\urway\nocash\service\ParceiroService.class
 br\com\urway\nocash\dao\DAOJDBC.class
+br\com\urway\nocash\dao\impl\DAOCarteira.class
 br\com\urway\nocash\service\filter\RESTCorsDemoResponseFilter.class
 br\com\urway\nocash\dao\DAOFactory.class
 br\com\urway\nocash\dao\impl\DAOCliente.class

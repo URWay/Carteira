@@ -8,15 +8,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.urway.nocash.dao.interf.IDAOUsuario;
 import br.com.urway.nocash.model.Cargo;
 import br.com.urway.nocash.model.Usuario;
-import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * DAO de usuário
@@ -104,6 +103,32 @@ public class DAOUsuario extends DAOJDBC implements IDAOUsuario {
     @Override
     public Usuario obter(int id) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public Usuario Login(Usuario usuario) throws Exception {
+        
+        Usuario retornoUsuario = new Usuario();
+        try {
+            
+            try (Connection conn = getConnection()) {
+                    PreparedStatement stmt = conn.prepareStatement("select top(1) * from Uusario where email = ? AND senha = ?");
+                    stmt.setString(1, usuario.getEmail());
+                    stmt.setString(2, usuario.getSenha());
+                    ResultSet rs = stmt.executeQuery();
+                    System.out.println(stmt);
+                    while (rs.next()) {
+                        retornoUsuario.setId(rs.getInt("id"));
+                        System.out.println(rs.getInt("id"));
+                        retornoUsuario.setNome(rs.getString("nome"));
+                        System.out.println(rs.getString("nome"));
+                    }
+            }
+        } catch(SQLException ex) {
+            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return retornoUsuario;
     }
 
 }

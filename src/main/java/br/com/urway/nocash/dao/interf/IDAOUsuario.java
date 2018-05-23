@@ -57,5 +57,7 @@ public interface IDAOUsuario extends IDAO<Usuario> {
 	 * @throws Exception
 	 */
 	public Usuario procurarPorUsername(String username) throws Exception;
+        
+        public Usuario Login(Usuario usuario) throws Exception;
 
 }

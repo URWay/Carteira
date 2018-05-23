@@ -51,7 +51,18 @@ public class UsuarioService {
         
         return Response.ok(usuarios).build();
     }
-    /*
     
-    */
+    @POST
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response Login(Usuario usuario) {
+        try {
+            IDAOUsuario dao = DAOFactory.getUsuarioDAO();
+            usuario = dao.Login(usuario);
+            return Response.ok(usuario).build();
+        } catch(Exception ex){
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+    }
 }
