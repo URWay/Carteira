@@ -12,18 +12,15 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.codehaus.jackson.annotate.JsonRawValue;
 
 //import br.com.urway.nocash.constant.MainConstants;
 import br.com.urway.nocash.dao.DAOFactory;
 import br.com.urway.nocash.dao.interf.*;
 import br.com.urway.nocash.model.Cliente;
-import br.com.urway.nocash.model.Usuario;
 
 /**
  * Contém serviços de usuários
@@ -37,10 +34,10 @@ public class ClienteService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getClientes(){
-        List<Cliente> clientes = null;
+        List<Cliente> clientes;
         try{
             IDAOCliente dao = DAOFactory.getClienteDAO();
-            clientes = dao.procurar("x");
+            clientes = dao.procurar();
         } catch(Exception ex){
             LOGGER.log(Level.SEVERE, "Falha na execução do DAO de Usuario", ex);
             Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
@@ -51,16 +48,16 @@ public class ClienteService {
         
         return Response.ok(clientes).build();
     }
-    /*
+    
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response inserirCliente(String content) throws Exception {
+    public Response inserirCliente(Cliente cliente) throws Exception {
         try{
-            ClienteDao dao = DaoFactory.getClienteDao();
-            dao.insert(content);
+            IDAOCliente dao = DAOFactory.getClienteDAO();
+            dao.inserir(cliente);
             return Response.ok().build();
-        } catch(DaoException ex){
+        } catch(Exception ex){
             return Response.serverError().entity(ex.getMessage()).build();
         }
     }
@@ -68,12 +65,12 @@ public class ClienteService {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateCliente(String content) throws Exception {
+    public Response updateCliente(Cliente cliente) throws Exception {
         try {
-            ClienteDao dao = DaoFactory.getClienteDao();
-            dao.update(content);
+            IDAOCliente dao = DAOFactory.getClienteDAO();
+            dao.atualizar(cliente);
             return Response.ok().build();
-        } catch(DaoException ex){
+        } catch(Exception ex){
             return Response.serverError().entity(ex.getMessage()).build();
         }
     }
@@ -82,16 +79,14 @@ public class ClienteService {
     @Path("login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response Login(String content) {
+    public Response Login(Cliente cliente) {
         try {
-        	System.out.println(content);
-            ClienteDao dao = DaoFactory.getClienteDao();
-            Cliente cliente = dao.Login(content);
-            return Response.ok(cliente).header("Access-Control-Allow-Origin", "*").build();
-        } catch(DaoException ex){
+            IDAOCliente dao = DAOFactory.getClienteDAO();
+            cliente = dao.Login(cliente);
+            return Response.ok(cliente).build();
+        } catch(Exception ex){
             return Response.serverError().entity(ex.getMessage()).build();
         }
     }
-    */
 
 }

@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface IDAOCliente extends IDAO<Cliente> {
 
+    public Cliente Login(Cliente cliente) throws Exception;
+
 }

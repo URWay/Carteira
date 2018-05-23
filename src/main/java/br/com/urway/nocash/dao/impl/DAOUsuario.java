@@ -31,17 +31,17 @@ public class DAOUsuario extends DAOJDBC implements IDAOUsuario {
     }
 
     @Override
-    public void atualizarNome(Long usuarioID, String nome) throws Exception {
+    public void atualizarNome(int usuarioID, String nome) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void alterarSenha(Long usuarioID, String passwordNew) throws Exception {
+    public void alterarSenha(int usuarioID, String passwordNew) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void resetarSenha(Long usuarioID) throws Exception {
+    public void resetarSenha(int usuarioID) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -102,12 +102,12 @@ public class DAOUsuario extends DAOJDBC implements IDAOUsuario {
     }
 
     @Override
-    public void excluir(long id) throws Exception {
+    public void excluir(int id) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Usuario obter(Long id) throws Exception {
+    public Usuario obter(int id) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
