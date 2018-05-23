@@ -27,7 +27,7 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
          try {
             try (Connection conn = getConnection();
                     PreparedStatement stmt = conn.prepareStatement("SELECT"
-                            + " m.carteiraOrigem, m.carteiraDestino, m.acao, m.nrDocumento, m.vlBRUTO, m.vlLiquido, m.vlDesc, m.dtMovimento,"
+                            + " m.carteiraOrigem, m.carteiraDestino, m.nrDocumento, m.vlBRUTO, m.vlLiquido, m.vlDesc, m.dtMovimento,"
                             + " o.id as 'idOrigem', o.saldo as 'saldoOrigem', o.nome as 'nomeOrigem',"
                             + " d.id as 'idDestino', d.saldo as 'saldoDestino', d.nome as 'nomeDestino'"
                             + " FROM Movimento m"
@@ -49,7 +49,7 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                         movimento.getCarteiraOrigem().setId(rs.getInt("idDestino"));
                         movimento.getCarteiraOrigem().setSaldo(rs.getDouble("saldoDestino"));
                         movimento.getCarteiraOrigem().setNome(rs.getString("nomeDestino"));
-                    movimento.setAcao(rs.getString("acao")); 
+                   
                     movimento.setNrDocumento(rs.getString("nrDocumento"));
                     movimento.setVlBruto(rs.getDouble("vlBRUTO"));
                     movimento.setVlLiquido(rs.getDouble("vlLIQUIDO"));
@@ -77,7 +77,6 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
 
                 stmt.setInt(1, mov.getCarteiraOrigem().getId());
                 stmt.setInt(2, mov.getCarteiraDestino().getId());
-                stmt.setString(3, mov.getAcao());
                 stmt.setString(4, mov.getNrDocumento());
                 stmt.setDouble(5, mov.getVlBruto());
                 stmt.setDouble(6, mov.getVlLiquido());
@@ -95,12 +94,12 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
     }
 
     @Override
-    public void excluir(long id) throws Exception {
+    public void excluir(int id) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Movimento obter(Long id) throws Exception {
+    public Movimento obter(int id) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
