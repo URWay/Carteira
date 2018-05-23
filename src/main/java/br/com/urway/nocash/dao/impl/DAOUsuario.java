@@ -26,11 +26,6 @@ import java.sql.Date;
 public class DAOUsuario extends DAOJDBC implements IDAOUsuario {
 
     @Override
-    public Usuario procuraUsuarioPassword(String username, String password) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void atualizarNome(Long usuarioID, String nome) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

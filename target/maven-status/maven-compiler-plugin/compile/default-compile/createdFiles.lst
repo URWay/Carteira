@@ -16,6 +16,7 @@ br\com\urway\nocash\model\Cargo.class
 br\com\urway\nocash\model\Carteira.class
 br\com\urway\nocash\model\Permissao.class
 br\com\urway\nocash\service\UsuarioService.class
+br\com\urway\nocash\service\ParceiroService.class
 br\com\urway\nocash\dao\DAOJDBC.class
 br\com\urway\nocash\service\filter\RESTCorsDemoResponseFilter.class
 br\com\urway\nocash\dao\DAOFactory.class
