@@ -4,7 +4,10 @@ org\netbeans\rest\application\config\ApplicationConfig.class
 br\com\urway\nocash\model\Parceiro.class
 br\com\urway\nocash\model\Usuario.class
 br\com\urway\nocash\model\Configuracao.class
+br\com\urway\nocash\service\MovimentoService.class
+br\com\urway\nocash\dao\impl\DAOMovimento.class
 br\com\urway\nocash\dao\interf\IDAO.class
+br\com\urway\nocash\dao\interf\IDAOMovimento.class
 br\com\urway\nocash\service\CarteiraService.class
 br\com\urway\nocash\model\Cliente.class
 br\com\urway\nocash\model\PermissaoCargo.class

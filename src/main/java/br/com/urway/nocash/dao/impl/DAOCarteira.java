@@ -33,7 +33,8 @@ public class DAOCarteira extends DAOJDBC implements IDAOCarteira {
         try {
             try (Connection conn = getConnection();
                     PreparedStatement stmt = conn.prepareStatement("SELECT"
-                            + " t.id, c.id as cliente, c.nome as nomeCliente, c.sobrenome, t.saldo, t.nome,"
+                            + " t.id, c.id as cliente, c.nome as nomeCliente, "
+                            + " c.sobrenome, t.saldo, t.nome,"
                             + " FROM Carteira t"
                             + " LEFT JOIN Cliente c on t.cliente = c.id ");
                     ResultSet rs = stmt.executeQuery()) {
@@ -73,14 +74,13 @@ public class DAOCarteira extends DAOJDBC implements IDAOCarteira {
                 try (Connection conn = getConnection();
                         PreparedStatement stmt = conn.prepareStatement("INSERT INTO"
                                 + " Carteira"
-                                + " (cliente, saldo, nome,"
+                                + " (cliente, nome,"
                                 + " senha, senhaOpcional)"
                                 + " VALUES (?, ?, ?, ?, ?) ")) {
                     stmt.setLong(1, cliente.getId());
-                    stmt.setDouble(2, carteira.getSaldo());
-                    stmt.setString(3, carteira.getNome());
-                    stmt.setString(4, carteira.getSenha());
-                    stmt.setShort(5, carteira.getSenhaOpcional());
+                    stmt.setString(2, carteira.getNome());
+                    stmt.setString(3, carteira.getSenha());
+                    stmt.setShort(4, carteira.getSenhaOpcional());
                     
                     if(stmt.executeUpdate() <= 0){
                         throw new SQLException("O registro não foi inserido!");
@@ -129,7 +129,24 @@ public class DAOCarteira extends DAOJDBC implements IDAOCarteira {
 
     @Override
     public void excluir(int id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            if(id > 0){
+                try (Connection conn = getConnection();
+                    PreparedStatement stmt = conn.prepareStatement(""
+                            + "DELETE FROM Carteira where id = ? ")) {
+                    stmt.setLong(1, id);
+                    
+                    if(stmt.executeUpdate() <= 0){
+                        throw new SQLException("O registro não pode ser deletado!");
+                    }
+                }
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            throw new Exception(ex);
+        }
+        
     }
 
     @Override

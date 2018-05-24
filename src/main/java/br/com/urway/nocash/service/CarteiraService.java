@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -74,7 +75,22 @@ public class CarteiraService {
         } catch(Exception ex){
             LOGGER.log(Level.SEVERE, "Falha na execução do DAO de Carteira", ex);
             Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
-                            .entity("Ocorreu uma falha ao inserir a carteira. "
+                            .entity("Ocorreu uma falha ao atualizar a carteira. "
+                                            + "Verifique o log do servidor para maiores detalhes").build();
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+    }
+    
+    @DELETE
+    public Response updateCarteira(int id) throws Exception {
+        try {
+            IDAOCarteira dao = DAOFactory.getCarteiraDAO();
+            dao.excluir(id);
+            return Response.ok().build();
+        } catch(Exception ex){
+            LOGGER.log(Level.SEVERE, "Falha na execução do DAO de Carteira", ex);
+            Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
+                            .entity("Ocorreu uma falha ao deletar a carteira. "
                                             + "Verifique o log do servidor para maiores detalhes").build();
             return Response.serverError().entity(ex.getMessage()).build();
         }

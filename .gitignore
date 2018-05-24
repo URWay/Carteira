@@ -24,3 +24,6 @@ hs_err_pid*
 target/*
 *.lst
 *.properties
+*.properties
+target/maven-archiver/pom.properties
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
