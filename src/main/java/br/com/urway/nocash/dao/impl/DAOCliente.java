@@ -1,18 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.urway.nocash.dao.impl;
-
 
 import br.com.urway.nocash.dao.DAOJDBC;
 import br.com.urway.nocash.dao.interf.IDAOCliente;
 import br.com.urway.nocash.model.Cliente;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -82,21 +78,18 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
                 stmt.setString(4, cliente.getCep());
                 stmt.setString(5, cliente.getCpf());
                 stmt.setString(6, cliente.getRg());
-                stmt.setDate(7, cliente.getDtNasc());
+                //stmt.setDate(7, cliente.getDtNasc());
                 stmt.setString(8, cliente.getSexo());
                 stmt.setString(9, cliente.getTel());
                 stmt.setString(10, cliente.getCel());
-                stmt.setDate(11, cliente.getDtRegistro());
+                //stmt.setDate(11, cliente.getDtRegistro());
                 stmt.setString(12, cliente.getSenha());
                 
                 if (stmt.executeUpdate() == 0) {
                     throw new SQLException("Nenhum registro inserido!");
                 } else {
                     try (ResultSet rs = stmt.getGeneratedKeys()) {
-                        if (rs.next()) {
-                            int id = rs.getInt("idCliente");
-                            cliente.setId(id);
-                        } else {
+                        if (!rs.next()) {
                             throw new SQLException("Id não foi criado!");
                         }
                     }
@@ -196,6 +189,7 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
     public Cliente Login(Cliente cliente) throws Exception {
         
         Cliente retornoCliente = new Cliente();
+        
         try {
             
             try (Connection conn = getConnection()) {
@@ -206,17 +200,17 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
 
                     while (rs.next()) {
                         retornoCliente.setId(rs.getInt("id"));
-                        retornoCliente.setNome(rs.getString("nome"));
-                        retornoCliente.setSobrenome(rs.getString("sobrenome"));
-                        retornoCliente.setCep(rs.getString("cep"));
-                        retornoCliente.setCpf(rs.getString("cpf"));
-                        retornoCliente.setRg(rs.getString("rg"));
-                        retornoCliente.setDtNasc(rs.getDate("dtNasc"));
+                        retornoCliente.setNome(rs.getString("nome").trim());
+                        retornoCliente.setEmail(rs.getString("email").trim());
+                        retornoCliente.setSobrenome(rs.getString("sobrenome").trim());
+                        retornoCliente.setCep(rs.getString("cep").trim());
+                        retornoCliente.setCpf(rs.getString("cpf").trim());
+                        retornoCliente.setRg(rs.getString("rg").trim());
+                        //retornoCliente.setDtNasc(rs.getDate("dtNasc"));
                         retornoCliente.setSexo(rs.getString("sexo"));
                         retornoCliente.setCel(rs.getString("tel"));
                         retornoCliente.setCel(rs.getString("cel"));
-                        retornoCliente.setDtRegistro(rs.getDate("dtRegistro"));
-
+                        //retornoCliente.setDtRegistro(rs.getDate("dtRegistro"));
                     }
             }
         } catch(SQLException ex) {

@@ -102,5 +102,50 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
     public Movimento obter(int id) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<Movimento> procurarCarteira(String acao, String data) throws Exception {
+        List<Movimento> mov = new ArrayList<>();
+         
+         try {
+            try (Connection conn = getConnection();
+                    PreparedStatement stmt = conn.prepareStatement("SELECT"
+                            + " m.carteiraOrigem, m.carteiraDestino, m.nrDocumento, m.vlBRUTO, m.vlLiquido, m.vlDesc, m.dtMovimento,"
+                            + " o.id as 'idOrigem', o.saldo as 'saldoOrigem', o.nome as 'nomeOrigem',"
+                            + " d.id as 'idDestino', d.saldo as 'saldoDestino', d.nome as 'nomeDestino'"
+                            + " FROM Movimento m"
+                            + " LEFT JOIN Carteira o ON o.id = m.carteiraOrigem"
+                            + " LEFT JOIN Carteira d on d.id = m.carteiraOrigem"
+                            + " ORDER BY dtMovimento");
+                    ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    
+                    
+                    Movimento movimento = new Movimento();
+                    movimento.setId(rs.getInt("id"));
+                    movimento.setCarteiraOrigem(new Carteira());
+                        movimento.getCarteiraOrigem().setId(rs.getInt("idOrigem"));
+                        movimento.getCarteiraOrigem().setSaldo(rs.getDouble("saldoOrigem"));
+                        movimento.getCarteiraOrigem().setNome(rs.getString("nomeOrigem"));
+                        
+                    movimento.setCarteiraDestino(new Carteira());
+                        movimento.getCarteiraOrigem().setId(rs.getInt("idDestino"));
+                        movimento.getCarteiraOrigem().setSaldo(rs.getDouble("saldoDestino"));
+                        movimento.getCarteiraOrigem().setNome(rs.getString("nomeDestino"));
+                   
+                    movimento.setNrDocumento(rs.getString("nrDocumento"));
+                    movimento.setVlBruto(rs.getDouble("vlBRUTO"));
+                    movimento.setVlLiquido(rs.getDouble("vlLIQUIDO"));
+                    movimento.setVlDesc(rs.getDouble("vlDESC"));
+                    movimento.setDtMovimento(rs.getTimestamp("dtMovimento"));
+                    mov.add(movimento);
+                }
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            throw new Exception(ex);
+        }
+        
+        return mov;
+    }
 }
 
