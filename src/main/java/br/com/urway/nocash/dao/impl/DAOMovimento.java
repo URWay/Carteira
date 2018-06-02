@@ -82,6 +82,16 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                 stmt.setDouble(6, mov.getVlLiquido());
                 stmt.setDouble(7, mov.getVlDesc());
                 stmt.setTimestamp(8, mov.getDtMovimento());
+                
+                if (stmt.executeUpdate() == 0) {
+                    throw new SQLException("Nenhum registro inserido!");
+                } else {
+                    try (ResultSet rs = stmt.getGeneratedKeys()) {
+                        if (!rs.next()) {
+                            throw new SQLException("Id não foi criado!");
+                        }
+                    }
+                }
             }
         } catch (ClassNotFoundException | SQLException ex) {
             throw new Exception(ex);
