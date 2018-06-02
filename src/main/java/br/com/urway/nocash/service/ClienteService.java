@@ -76,7 +76,7 @@ public class ClienteService {
     }
     
     @POST
-    @Path("login")
+    @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response Login(Cliente cliente) {
@@ -88,5 +88,5 @@ public class ClienteService {
             return Response.serverError().entity(ex.getMessage()).build();
         }
     }
-
+    
 }

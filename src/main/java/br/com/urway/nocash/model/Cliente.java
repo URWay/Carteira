@@ -1,6 +1,5 @@
 package br.com.urway.nocash.model;
 
-import br.com.urway.nocash.validacoes.valid;
 import java.sql.Date;
 
 public class Cliente {
