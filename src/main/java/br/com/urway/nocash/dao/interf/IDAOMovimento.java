@@ -6,5 +6,6 @@ import java.util.List;
 public interface IDAOMovimento extends IDAO<Movimento> {
     
     public List<Movimento> procurarCarteira(String acao, String data) throws Exception;
+    public void cargaCarteira(Movimento mov) throws Exception;
     
 }

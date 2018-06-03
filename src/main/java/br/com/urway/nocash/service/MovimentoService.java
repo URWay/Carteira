@@ -26,6 +26,8 @@ import br.com.urway.nocash.model.Movimento;
  */
 @Path("/movimento")
 public class MovimentoService {
+    
+    private static final Logger LOGGER = Logger.getLogger(MovimentoService.class.getName());
 
     /*@GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -40,4 +42,51 @@ public class MovimentoService {
         
         return Response.ok(mov).build();
     }*/
+    
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMovimentos(){
+        List<Movimento> mov;
+        try{
+            IDAOMovimento dao = DAOFactory.getMovimentoDAO();
+            mov = dao.procurar();
+        } catch(Exception ex){
+            LOGGER.log(Level.SEVERE, "Falha na execução do DAO de Movimento", ex);
+            Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
+                            .entity("Ocorreu uma falha ao buscar movimentos de extrato. "
+                                            + "Verifique o log do servidor para maiores detalhes").build();
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+        
+        return Response.ok(mov).build();
+    }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response inserirMovimento(Movimento mov) throws Exception {
+        try{
+            IDAOMovimento dao = DAOFactory.getMovimentoDAO();
+            dao.inserir(mov);
+            return Response.ok().build();
+        } catch(Exception ex){
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+    } 
+    
+  /*  @Path("/carga")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response cargaMovimento(Movimento mov) throws Exception {
+        try{
+            IDAOMovimento dao = DAOFactory.getMovimentoDAO();
+            dao.cargaCarteira(mov);
+            return Response.ok().build();
+        } catch(Exception ex){
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+    } */
+    
 }
