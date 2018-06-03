@@ -32,12 +32,6 @@ public class ApplicationConfig extends Application {
         resources.add(br.com.urway.nocash.service.UsuarioService.class);
         resources.add(br.com.urway.nocash.service.filter.RESTCorsDemoRequestFilter.class);
         resources.add(br.com.urway.nocash.service.filter.RESTCorsDemoResponseFilter.class);
-        resources.add(org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider.class);
-        resources.add(org.codehaus.jackson.jaxrs.JacksonJsonProvider.class);
-        resources.add(org.codehaus.jackson.jaxrs.JsonMappingExceptionMapper.class);
-        resources.add(org.codehaus.jackson.jaxrs.JsonParseExceptionMapper.class);
-        resources.add(org.glassfish.jersey.jsonb.internal.JsonBindingProvider.class);
-        resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
     }
     
 }

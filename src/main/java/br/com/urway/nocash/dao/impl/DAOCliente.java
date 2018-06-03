@@ -32,7 +32,6 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
                     ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     
-                    
                     Cliente cliente = new Cliente();
                     cliente.setId(rs.getInt("id"));
                     cliente.setTel(rs.getString("tel"));
@@ -54,7 +53,7 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
                 }
             }
         } catch (ClassNotFoundException | SQLException ex) {
-            throw new Exception(ex);
+            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return clientes;
@@ -68,9 +67,8 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO"
                             + " Cliente"
                             + " (nome, sobrenome, email, cep,"
-                            + " cpf, rg, dtNasc, sexo, tel, cel,"
-                            + " dtRegistro, senha) "
-                            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ")) {
+                            + " cpf, rg, sexo, tel, cel, senha) "
+                            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ")) {
 
                 stmt.setString(1, cliente.getNome());
                 stmt.setString(2, cliente.getSobrenome());
@@ -78,80 +76,56 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
                 stmt.setString(4, cliente.getCep());
                 stmt.setString(5, cliente.getCpf());
                 stmt.setString(6, cliente.getRg());
-                //stmt.setDate(7, cliente.getDtNasc());
-                stmt.setString(8, cliente.getSexo());
-                stmt.setString(9, cliente.getTel());
-                stmt.setString(10, cliente.getCel());
-                //stmt.setDate(11, cliente.getDtRegistro());
-                stmt.setString(12, cliente.getSenha());
+                stmt.setString(7, cliente.getSexo());
+                stmt.setString(8, cliente.getTel());
+                stmt.setString(9, cliente.getCel());
+                stmt.setString(10, cliente.getSenha());
                 
                 if (stmt.executeUpdate() == 0) {
-                    throw new SQLException("Nenhum registro inserido!");
-                } else {
-                    try (ResultSet rs = stmt.getGeneratedKeys()) {
-                        if (!rs.next()) {
-                            throw new SQLException("Id não foi criado!");
-                        }
-                    }
+                    throw new SQLException("Nenhum registro inserido!");    
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            throw new Exception(ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            throw new SQLException(ex);
         }
     }
 
     @Override
     public void atualizar(Cliente cliente) throws Exception {
-                
-        
-        //    String dtRegistroS = object.getString("dtRegistro");
-        //    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        //    java.sql.Date data = (java.sql.Date) sdf.parse(dtRegistroS);
-        //    Date dtRegistro = new Date(data.getTime());
-        //    data = (java.sql.Date) sdf.parse(dtNascS);
-        //   Date dtNasc = new Date(data.getTime());
-        
-        //if(cliente.isValid("A")){
-        //    throw new IllegalArgumentException("cliente");
-        //}
         
         try {
-            Connection conn = getConnection(); 
+            try (Connection conn = getConnection();
+                    PreparedStatement stmt = conn.prepareStatement("UPDATE cliente SET"
+                        + " nome =  ?,"
+                        + " sobrenome = ?, "
+                        + " email = ?, "
+                        + " cep = ?, "
+                        + " cpf = ?, "
+                        + " rg = ?, "
+                        + " sexo = ?, "
+                        + " tel = ?, "
+                        + " cel = ? "
+                        + " WHERE id = ?")) {
 
-            String sql = "UPDATE cliente SET"
-               + "nome =  ?,"
-               + "sobrenome = ?, "
-               + "email = ?, "
-               + "cep = ?, "
-               + "cpf = ?, "
-               + "rg = ?, "
-               + "dtNasc = ?, "
-               + "sexo = ?, "
-               + "tel = ?, "
-               + "cel = ?, "
-               + "dtRegistro = ?   "
-               + "WHERE id = ?";
-
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, cliente.getNome());
-            ps.setString(2, cliente.getSobrenome());
-            ps.setString(3, cliente.getEmail()); 
-            ps.setString(4, cliente.getCep());
-            ps.setString(5, cliente.getCpf());
-            ps.setString(6, cliente.getRg());
-            ps.setDate(7, cliente.getDtNasc());
-            ps.setString(8, cliente.getSexo());
-            ps.setString(9, cliente.getTel());
-            ps.setString(10, cliente.getCel());
-            ps.setDate(11, cliente.getDtRegistro());
-            ps.setInt(12, cliente.getId());
-
-            if(ps.executeUpdate() <= 0){
-                throw new SQLException("O registro não pode ser atualizado!");
+                stmt.setString(1, cliente.getNome());
+                stmt.setString(2, cliente.getSobrenome());
+                stmt.setString(3, cliente.getEmail()); 
+                stmt.setString(4, cliente.getCep());
+                stmt.setString(5, cliente.getCpf());
+                stmt.setString(6, cliente.getRg());
+                stmt.setString(7, cliente.getSexo());
+                stmt.setString(8, cliente.getTel());
+                stmt.setString(9, cliente.getCel());
+                stmt.setInt(10, cliente.getId());
+                
+                if(stmt.executeUpdate() <= 0){
+                    throw new SQLException("O registro não pode ser atualizado!");
+                }
             }
-
-        } catch(ClassNotFoundException | SQLException ex){
-            throw new Exception(ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            throw new SQLException(ex);
         }
     }
 
@@ -168,15 +142,15 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
                     throw new SQLException("Nenhum registro inserido!");
                 } else {
                     try (ResultSet rs = stmt.getGeneratedKeys()) {
-                        if (rs.next()) {
-                        } else {
+                        if (!rs.next()) {
                             throw new SQLException("Cliente não foi excluído!");
                         }
                     }
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            throw new Exception(ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            throw new SQLException(ex);
         }
     }
 
@@ -193,7 +167,8 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
         try {
             
             try (Connection conn = getConnection()) {
-                    PreparedStatement stmt = conn.prepareStatement("select top(1) * from Cliente where email = ? AND senha = ?");
+                    PreparedStatement stmt = 
+                            conn.prepareStatement("select top(1) * from Cliente where email = ? AND senha = ?");
                     stmt.setString(1, cliente.getEmail());
                     stmt.setString(2, cliente.getSenha());
                     ResultSet rs = stmt.executeQuery();
@@ -215,6 +190,7 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
             }
         } catch(SQLException ex) {
             Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            throw new SQLException(ex);
         }
         
         return retornoCliente;

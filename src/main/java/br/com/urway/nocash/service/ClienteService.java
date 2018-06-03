@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response;
 import br.com.urway.nocash.dao.DAOFactory;
 import br.com.urway.nocash.dao.interf.*;
 import br.com.urway.nocash.model.Cliente;
+import javax.ws.rs.DELETE;
 
 /**
  * Contém serviços de usuários
@@ -69,6 +70,19 @@ public class ClienteService {
         try {
             IDAOCliente dao = DAOFactory.getClienteDAO();
             dao.atualizar(cliente);
+            return Response.ok().build();
+        } catch(Exception ex){
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+    }
+    
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteCliente(int id) throws Exception {
+        try {
+            IDAOCliente dao = DAOFactory.getClienteDAO();
+            dao.excluir(id);
             return Response.ok().build();
         } catch(Exception ex){
             return Response.serverError().entity(ex.getMessage()).build();
