@@ -27,22 +27,7 @@ import br.com.urway.nocash.model.Movimento;
 @Path("/movimento")
 public class MovimentoService {
     
-    private static final Logger LOGGER = Logger.getLogger(MovimentoService.class.getName());
-
-    /*@GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getMovimentos(String acao, String data){
-        List<Movimento> mov;
-        try{
-            IDAOMovimento dao = DAOFactory.getMovimentoDAO();
-            mov = dao.procurar(acao, data);
-        } catch(Exception ex){
-            return Response.serverError().entity(ex.getMessage()).build();
-        }
-        
-        return Response.ok(mov).build();
-    }*/
-    
+    private static final Logger LOGGER = Logger.getLogger(MovimentoService.class.getName());    
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -75,11 +60,11 @@ public class MovimentoService {
         }
     } 
     
-  /*  @Path("/carga")
+    @Path("/carga")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response cargaMovimento(Movimento mov) throws Exception {
+    public Response cargaMovimento(Movimento mov) {
         try{
             IDAOMovimento dao = DAOFactory.getMovimentoDAO();
             dao.cargaCarteira(mov);
@@ -87,6 +72,35 @@ public class MovimentoService {
         } catch(Exception ex){
             return Response.serverError().entity(ex.getMessage()).build();
         }
-    } */
+    } 
+    
+    @Path("/destino")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response destino(int id) {
+        
+        try{
+            List<Movimento> mov;
+            IDAOMovimento dao = DAOFactory.getMovimentoDAO();
+            mov = dao.getDestino(id);
+            return Response.ok(mov).build();
+        } catch(Exception ex){
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+    } 
+    
+    @Path("/origem")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response origem(int id){
+        try{
+            List<Movimento> mov;
+            IDAOMovimento dao = DAOFactory.getMovimentoDAO();
+            mov = dao.getOrigem(id);
+            return Response.ok(mov).build();
+        } catch(Exception ex){
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+    } 
     
 }
