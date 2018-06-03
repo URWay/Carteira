@@ -74,10 +74,10 @@ public class MovimentoService {
         }
     } 
     
-    @Path("/destino")
+    @Path("/destino/{param}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response destino(int id) {
+    public Response destino(@PathParam("param") int id) {
         
         try{
             List<Movimento> mov;
@@ -89,10 +89,10 @@ public class MovimentoService {
         }
     } 
     
-    @Path("/origem")
+    @Path("/origem/{param}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response origem(int id){
+    public Response origem(@PathParam("param") int id){
         try{
             List<Movimento> mov;
             IDAOMovimento dao = DAOFactory.getMovimentoDAO();
