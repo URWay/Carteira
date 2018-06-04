@@ -25,7 +25,7 @@ public class DAOCarteira extends DAOJDBC implements IDAOCarteira {
             try (Connection conn = getConnection();
                     PreparedStatement stmt = conn.prepareStatement("SELECT"
                             + " t.id, c.id as cliente, c.nome as nomeCliente, "
-                            + " c.sobrenome, t.saldo, t.nome,"
+                            + " c.email, c.cpf, c.rg, t.saldo, t.nome"
                             + " FROM Carteira t"
                             + " LEFT JOIN Cliente c on t.cliente = c.id ");
                     ResultSet rs = stmt.executeQuery()) {
@@ -40,13 +40,15 @@ public class DAOCarteira extends DAOJDBC implements IDAOCarteira {
                     // Cliente
                     cliente.setId(rs.getInt("cliente"));
                     cliente.setNome(rs.getString("nomeCliente"));
-                    cliente.setSobrenome(rs.getString("sobrenome"));
+                    cliente.setEmail(rs.getString("email"));
+                    cliente.setCpf(rs.getString("cpf"));
+                    cliente.setRg(rs.getString("rg"));
                     
                     carteira.setCliente(cliente);
                     carteiras.add(carteira);
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             throw new Exception(ex);
         }
         
@@ -61,17 +63,18 @@ public class DAOCarteira extends DAOJDBC implements IDAOCarteira {
             Cliente cliente = new Cliente();
             cliente.setId(carteira.getCliente().getId());
             
-            if(cliente.getId() > 0 && cliente.getId() > 0){
+            if(cliente.getId() > 0){
                 try (Connection conn = getConnection();
                         PreparedStatement stmt = conn.prepareStatement("INSERT INTO"
                                 + " Carteira"
-                                + " (cliente, nome,"
+                                + " (cliente, saldo, nome,"
                                 + " senha, senhaOpcional)"
                                 + " VALUES (?, ?, ?, ?, ?) ")) {
                     stmt.setLong(1, cliente.getId());
-                    stmt.setString(2, carteira.getNome());
-                    stmt.setString(3, carteira.getSenha());
-                    stmt.setShort(4, carteira.getSenhaOpcional());
+                    stmt.setDouble(2, carteira.getSaldo());
+                    stmt.setString(3, carteira.getNome());
+                    stmt.setString(4, carteira.getSenha());
+                    stmt.setShort(5, carteira.getSenhaOpcional());
                     
                     if(stmt.executeUpdate() <= 0){
                         throw new SQLException("O registro não foi inserido!");
@@ -79,7 +82,7 @@ public class DAOCarteira extends DAOJDBC implements IDAOCarteira {
                 }
             }
             
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             throw new Exception(ex);
         }
         
@@ -112,7 +115,7 @@ public class DAOCarteira extends DAOJDBC implements IDAOCarteira {
                 }
             }
             
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             throw new Exception(ex);
         }
         
@@ -134,7 +137,7 @@ public class DAOCarteira extends DAOJDBC implements IDAOCarteira {
                 }
             }
             
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             throw new Exception(ex);
         }
         
@@ -142,7 +145,44 @@ public class DAOCarteira extends DAOJDBC implements IDAOCarteira {
 
     @Override
     public Carteira obter(int id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Carteira carteira = new Carteira();
+        
+        try {
+            Cliente cliente = new Cliente();
+            
+            try (Connection conn = getConnection()){
+                    PreparedStatement stmt = conn.prepareStatement("SELECT"
+                            + " t.id, c.id as cliente, c.nome as nomeCliente, "
+                            + " c.email, c.cpf, c.rg, t.saldo, t.nome"
+                            + " FROM Carteira t"
+                            + " LEFT JOIN Cliente c on t.cliente = c.id "
+                            + " Where t.cliente = ?");
+                    stmt.setInt(1, id);
+                    ResultSet rs = stmt.executeQuery();
+                    
+                while (rs.next()) {
+                    
+                    // Carteira
+                    carteira.setId(rs.getInt("id"));                    
+                    carteira.setSaldo(rs.getDouble("saldo"));
+                    carteira.setNome(rs.getString("nome"));
+                    
+                    // Cliente
+                    cliente.setId(rs.getInt("cliente"));
+                    cliente.setNome(rs.getString("nomeCliente"));
+                    cliente.setEmail(rs.getString("email"));
+                    cliente.setCpf(rs.getString("cpf"));
+                    cliente.setRg(rs.getString("rg"));
+                    
+                    carteira.setCliente(cliente);
+                }
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            throw new Exception(ex);
+        }
+        
+        return carteira;
     }
      
 }

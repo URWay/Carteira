@@ -93,7 +93,7 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                     }
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             throw new Exception(ex);
         }
     }
@@ -151,7 +151,7 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                     mov.add(movimento);
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             throw new Exception(ex);
         }
         
@@ -185,7 +185,7 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                     }
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             throw new Exception(ex);
         }
     }
@@ -233,7 +233,7 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                     mov.add(movimento);
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             throw new Exception(ex);
         }
         
@@ -283,7 +283,7 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                     mov.add(movimento);
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             throw new Exception(ex);
         }
         
