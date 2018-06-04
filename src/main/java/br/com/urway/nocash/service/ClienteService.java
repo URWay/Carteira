@@ -103,4 +103,16 @@ public class ClienteService {
         }
     }
     
+    @POST
+    @Path("/email")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response verificaEmail(String email ) {
+        try {
+            IDAOCliente dao = DAOFactory.getClienteDAO();
+            boolean retorno = dao.verificaEmail(email);
+            return Response.ok(retorno).build();
+        } catch(Exception ex){
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+    }
 }

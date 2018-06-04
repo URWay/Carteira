@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.codehaus.jettison.json.JSONObject;
+
 public class DAOCliente extends DAOJDBC implements IDAOCliente {
 
     @Override
@@ -175,17 +177,15 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
 
                     while (rs.next()) {
                         retornoCliente.setId(rs.getInt("id"));
-                        retornoCliente.setNome(rs.getString("nome").trim());
-                        retornoCliente.setEmail(rs.getString("email").trim());
-                        retornoCliente.setSobrenome(rs.getString("sobrenome").trim());
-                        retornoCliente.setCep(rs.getString("cep").trim());
-                        retornoCliente.setCpf(rs.getString("cpf").trim());
-                        retornoCliente.setRg(rs.getString("rg").trim());
-                        //retornoCliente.setDtNasc(rs.getDate("dtNasc"));
+                        retornoCliente.setNome(rs.getString("nome"));
+                        retornoCliente.setEmail(rs.getString("email"));
+                        retornoCliente.setSobrenome(rs.getString("sobrenome"));
+                        retornoCliente.setCep(rs.getString("cep"));
+                        retornoCliente.setCpf(rs.getString("cpf"));
+                        retornoCliente.setRg(rs.getString("rg"));
                         retornoCliente.setSexo(rs.getString("sexo"));
-                        retornoCliente.setCel(rs.getString("tel"));
+                        retornoCliente.setTel(rs.getString("tel"));
                         retornoCliente.setCel(rs.getString("cel"));
-                        //retornoCliente.setDtRegistro(rs.getDate("dtRegistro"));
                     }
             }
         } catch(SQLException ex) {
@@ -196,4 +196,28 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
         return retornoCliente;
     }
     
+    
+    @Override
+    public boolean verificaEmail(String email) throws Exception {
+        boolean retorno = false;
+        
+        try {
+            
+            JSONObject object = new JSONObject(email);
+            
+            try (Connection conn = getConnection()) {
+                   PreparedStatement stmt = 
+                           conn.prepareStatement("select top(1) email from Cliente where email = ?");
+                   stmt.setString(1, object.getString("email"));
+                   ResultSet rs = stmt.executeQuery();
+
+                   retorno = rs.next();
+           }
+        } catch(SQLException ex) {
+            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            throw new SQLException(ex);
+        }
+         
+        return retorno;
+    }
 }
