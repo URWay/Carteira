@@ -165,15 +165,16 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
             try (Connection conn = getConnection();
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO"
                             + " Movimento"
-                            + " (carteiraOrigem, carteiraDestino, acao, nrDocumento, vlBruto, vlLiquido, lvDesc, dtMovimento)"
-                            + " VALUES (0, ?, ?, ?, ?, ?, ?, ?) ")) {
+                            + " (carteiraOrigem, carteiraDestino, nrDocumento, vlBruto, vlLiquido, vlDesc, dtMovimento)"
+                            + " VALUES (?, ?, ?, ?, ?, ?, ?) ")) {
 
+                stmt.setInt(1, 0);
                 stmt.setInt(2, mov.getCarteiraDestino().getId());
-                stmt.setString(4, mov.getNrDocumento());
-                stmt.setDouble(5, mov.getVlBruto());
-                stmt.setDouble(6, mov.getVlLiquido());
-                stmt.setDouble(7, mov.getVlDesc());
-                stmt.setTimestamp(8, mov.getDtMovimento());
+                stmt.setString(3, mov.getNrDocumento());
+                stmt.setDouble(4, mov.getVlBruto());
+                stmt.setDouble(5, mov.getVlLiquido());
+                stmt.setDouble(6, mov.getVlDesc());
+                stmt.setTimestamp(7, mov.getDtMovimento());
                 
                 if (stmt.executeUpdate() == 0) {
                     throw new SQLException("Nenhum registro inserido!");
