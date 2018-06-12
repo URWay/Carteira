@@ -5,17 +5,16 @@ package br.com.urway.nocash.dao.impl;
 
 import br.com.urway.nocash.dao.DAOJDBC;
 import br.com.urway.nocash.dao.interf.IDAOMovimento;
-import br.com.urway.nocash.model.Cliente;
 import br.com.urway.nocash.model.Carteira;
 import br.com.urway.nocash.model.Movimento;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
 
@@ -72,25 +71,18 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
             try (Connection conn = getConnection();
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO"
                             + " Movimento"
-                            + " (carteiraOrigem, carteiraDestino, acao, nrDocumento, vlBruto, vlLiquido, lvDesc, dtMovimento)"
-                            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?) ")) {
+                            + " (carteiraOrigem, carteiraDestino, nrDocumento, vlBruto, vlLiquido, vlDesc)"
+                            + " VALUES (?, ?, ?, ?, ?, ?) ")) {
 
                 stmt.setInt(1, mov.getCarteiraOrigem().getId());
                 stmt.setInt(2, mov.getCarteiraDestino().getId());
-                stmt.setString(4, mov.getNrDocumento());
-                stmt.setDouble(5, mov.getVlBruto());
-                stmt.setDouble(6, mov.getVlLiquido());
-                stmt.setDouble(7, mov.getVlDesc());
-                stmt.setTimestamp(8, mov.getDtMovimento());
+                stmt.setString(3, mov.getNrDocumento());
+                stmt.setDouble(4, mov.getVlBruto());
+                stmt.setDouble(5, mov.getVlLiquido());
+                stmt.setDouble(6, mov.getVlDesc());
                 
                 if (stmt.executeUpdate() == 0) {
-                    throw new SQLException("Nenhum registro inserido!");
-                } else {
-                    try (ResultSet rs = stmt.getGeneratedKeys()) {
-                        if (!rs.next()) {
-                            throw new SQLException("Id não foi criado!");
-                        }
-                    }
+                    throw new SQLException("Nenhum registro inserido!");    
                 }
             }
         } catch (SQLException ex) {
@@ -165,8 +157,8 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
             try (Connection conn = getConnection();
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO"
                             + " Movimento"
-                            + " (carteiraOrigem, carteiraDestino, nrDocumento, vlBruto, vlLiquido, vlDesc, dtMovimento)"
-                            + " VALUES (?, ?, ?, ?, ?, ?, ?) ")) {
+                            + " (carteiraOrigem, carteiraDestino, nrDocumento, vlBruto, vlLiquido, vlDesc)"
+                            + " VALUES (?, ?, ?, ?, ?, ?) ")) {
 
                 stmt.setInt(1, 0);
                 stmt.setInt(2, mov.getCarteiraDestino().getId());
@@ -174,20 +166,14 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                 stmt.setDouble(4, mov.getVlBruto());
                 stmt.setDouble(5, mov.getVlLiquido());
                 stmt.setDouble(6, mov.getVlDesc());
-                stmt.setTimestamp(7, mov.getDtMovimento());
                 
                 if (stmt.executeUpdate() == 0) {
-                    throw new SQLException("Nenhum registro inserido!");
-                } else {
-                    try (ResultSet rs = stmt.getGeneratedKeys()) {
-                        if (!rs.next()) {
-                            throw new SQLException("Id não foi criado!");
-                        }
-                    }
+                    throw new SQLException("Nenhum registro inserido!");    
                 }
             }
         } catch (SQLException ex) {
-            throw new Exception(ex);
+            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            throw new SQLException(ex);
         }
     }
     

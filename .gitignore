@@ -28,3 +28,6 @@ target/*
 target/maven-archiver/pom.properties
 target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
 target/maven-archiver/pom.properties
+target/maven-archiver/pom.properties
+target/maven-archiver/pom.properties
+target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
