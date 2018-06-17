@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import br.com.urway.nocash.dao.DAOJDBC;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 public class valid extends DAOJDBC {
     
@@ -18,6 +20,17 @@ public class valid extends DAOJDBC {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+    
+    public static boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+           InternetAddress emailAddr = new InternetAddress(email);
+           emailAddr.validate();
+        } catch (AddressException ex) {
+           result = false;
+        }
+        return result;
+     }
     
     public static boolean isUniqueEmail(String email){
         /*String sql = "SELECT emailCliente FROM cliente WHERE emailCliente = " + email;

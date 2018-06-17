@@ -3,6 +3,7 @@ package br.com.urway.nocash.dao.impl;
 import br.com.urway.nocash.dao.DAOJDBC;
 import br.com.urway.nocash.dao.interf.IDAOCliente;
 import br.com.urway.nocash.model.Cliente;
+import br.com.urway.nocash.validacoes.valid;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,9 +15,47 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.security.Key;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
 import org.codehaus.jettison.json.JSONObject;
 
 public class DAOCliente extends DAOJDBC implements IDAOCliente {
+    
+    private static final String ALGO = "AES";
+    private final byte[] KeyValue;
+    private final String KEY = "lv39eptlvuhaqqsr";
+    
+    public DAOCliente(String Key){
+        KeyValue = Key.getBytes();
+    }
+    
+    public String encrypt(String Data) throws Exception {
+        Key key = generateKey();
+        Cipher c = Cipher.getInstance(ALGO);
+        c.init(Cipher.ENCRYPT_MODE, key);
+        byte[] encVal = c.doFinal(Data.getBytes());
+        String encryptedValue = new BASE64Encoder().encode(encVal);
+        return encryptedValue;
+    }
+    
+    public String decrypt(String encryptedData) throws Exception {
+        Key key = generateKey();
+        Cipher c = Cipher.getInstance(ALGO);
+        c.init(Cipher.DECRYPT_MODE, key);
+        byte[] decordedValue = new BASE64Decoder().decodeBuffer(encryptedData);
+        byte[] decValue = c.doFinal(decordedValue);
+        String decryptedValue = new String(decValue);
+        return decryptedValue;
+    }
+    
+    private Key generateKey() throws Exception {
+        Key key = new SecretKeySpec(KeyValue, ALGO);
+        return key;
+    }
 
     @Override
     public List<Cliente> procurar(Object... criterios) throws Exception {
@@ -45,10 +84,6 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
                     cliente.setCpf(rs.getString("cpf"));
                     cliente.setRg(rs.getString("rg"));
                     cliente.setSexo(rs.getString("sexo"));
-                    
-                    //cliente.setDtNasc(rs.getDate("dtNasc"));
-                    //cliente.setDtRegistro(rs.getDate("dtRegistro"));
-                    
                     cliente.setSenha(rs.getString("senha"));
                     
                     clientes.add(cliente);
@@ -74,14 +109,29 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
 
                 stmt.setString(1, cliente.getNome());
                 stmt.setString(2, cliente.getSobrenome());
-                stmt.setString(3, cliente.getEmail());
+                
+                String email = cliente.getEmail();
+                boolean isEmail = valid.isEmail(email);
+                    
+                if(!isEmail){
+                    Logger.getLogger(DAOCliente.class.getName())
+                            .log(Level.SEVERE, null, "E-mail inválido");
+                    throw new SQLException("E-mail inválido");
+                }
+                
+                stmt.setString(3, email);
                 stmt.setString(4, cliente.getCep());
                 stmt.setString(5, cliente.getCpf());
                 stmt.setString(6, cliente.getRg());
                 stmt.setString(7, cliente.getSexo());
                 stmt.setString(8, cliente.getTel());
                 stmt.setString(9, cliente.getCel());
-                stmt.setString(10, cliente.getSenha());
+                
+                // Encrypt AES
+                DAOCliente aes = new DAOCliente(KEY);
+                String encrypt = aes.encrypt(cliente.getSenha());
+                
+                stmt.setString(10, encrypt);
                 
                 if (stmt.executeUpdate() == 0) {
                     throw new SQLException("Nenhum registro inserido!");    
@@ -171,8 +221,24 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
             try (Connection conn = getConnection()) {
                     PreparedStatement stmt = 
                             conn.prepareStatement("select top(1) * from Cliente where email = ? AND senha = ?");
-                    stmt.setString(1, cliente.getEmail());
-                    stmt.setString(2, cliente.getSenha());
+                    
+                    
+                    String email = cliente.getEmail();
+                    boolean isEmail = valid.isEmail(email);
+                    
+                    if(!isEmail){
+                        Logger.getLogger(DAOCliente.class.getName())
+                                .log(Level.SEVERE, null, "E-mail inválido");
+                        throw new SQLException("E-mail inválido");
+                    }
+                    
+                    stmt.setString(1, email);
+                    
+                    // Verifica senha
+                    DAOCliente aes = new DAOCliente(KEY);
+                    String encrypt = aes.encrypt(cliente.getSenha());
+                    
+                    stmt.setString(2, encrypt);
                     ResultSet rs = stmt.executeQuery();
 
                     while (rs.next()) {
@@ -208,7 +274,17 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
             try (Connection conn = getConnection()) {
                    PreparedStatement stmt = 
                            conn.prepareStatement("select top(1) email from Cliente where email = ?");
-                   stmt.setString(1, object.getString("email"));
+                   
+                   String emailV = object.getString("email");
+                   boolean isEmail = valid.isEmail(emailV);
+                   
+                   if(!isEmail){
+                        Logger.getLogger(DAOCliente.class.getName())
+                                .log(Level.SEVERE, null, "E-mail inválido");
+                        throw new SQLException("E-mail inválido");
+                    }
+                   
+                   stmt.setString(1, emailV);
                    ResultSet rs = stmt.executeQuery();
 
                    retorno = rs.next();

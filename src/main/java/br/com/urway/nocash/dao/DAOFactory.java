@@ -19,15 +19,15 @@ import br.com.urway.nocash.dao.interf.IDAOMovimento;
 public class DAOFactory {
 
 	public static IDAOUsuario getUsuarioDAO() {
-		return new DAOUsuario();
+            return new DAOUsuario();
 	}
         public static IDAOCliente getClienteDAO() {
-		return new DAOCliente();
+            return new DAOCliente("");
 	}
         public static IDAOCarteira getCarteiraDAO() {
-                return new DAOCarteira();
+            return new DAOCarteira();
         }
         public static IDAOMovimento getMovimentoDAO() {
-                return new DAOMovimento();
+            return new DAOMovimento();
         }
 }
