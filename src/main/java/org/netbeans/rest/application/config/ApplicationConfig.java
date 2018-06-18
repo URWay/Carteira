@@ -29,6 +29,7 @@ public class ApplicationConfig extends Application {
         resources.add(br.com.urway.nocash.service.CarteiraService.class);
         resources.add(br.com.urway.nocash.service.ClienteService.class);
         resources.add(br.com.urway.nocash.service.MovimentoService.class);
+        resources.add(br.com.urway.nocash.service.ParceiroService.class);
         resources.add(br.com.urway.nocash.service.UsuarioService.class);
         resources.add(br.com.urway.nocash.service.filter.RESTCorsDemoRequestFilter.class);
         resources.add(br.com.urway.nocash.service.filter.RESTCorsDemoResponseFilter.class);

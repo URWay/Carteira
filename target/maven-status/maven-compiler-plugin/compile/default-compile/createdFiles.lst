@@ -11,7 +11,6 @@ br\com\urway\nocash\dao\interf\IDAOMovimento.class
 br\com\urway\nocash\service\CarteiraService.class
 br\com\urway\nocash\model\Cliente.class
 br\com\urway\nocash\model\PermissaoCargo.class
-br\com\urway\nocash\model\ParceiroFilial.class
 br\com\urway\nocash\dao\interf\IDAOCarteira.class
 br\com\urway\nocash\service\ClienteService.class
 br\com\urway\nocash\model\Filial.class

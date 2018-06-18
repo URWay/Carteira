@@ -10,6 +10,15 @@ public class Parceiro {
     private String cpf;
     private String nome;
     private List<Filial> filiais;
+    private Usuario usuario;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public int getId() {
         return id;

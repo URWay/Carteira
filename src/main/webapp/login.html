@@ -100,30 +100,19 @@
 
             $.ajax({
                 type: "POST",
-                url: 'http://localhost:8080/nocash/ws/login',
-
-                dataType: "json",
-                data: {
-                    userName: $("#email").val(),
-                    password: $("#senha").val()
-                },
-                xhrFields: {
-                    withCredentials: true
-                },
+                url: 'http://localhost:8080/nocash/ws/usuarios/login', dataType: "json",
+                data: JSON.stringify({email: $("#email").val(),
+                    senha: $("#senha").val()}),
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Headers': 'origin, content-type, accept, authorization'
                 },
-                crossDomain: true,
                 success: function (data, textStatus, response) {
                     console.log(response.getAllResponseHeaders());
                     console.log(response.getResponseHeader("Set-Cookie"));
-                    alert(response);
+                    console.log(response);
                 }.bind(this),
                 error: function (xhr, status, err) {
-                    alert(err);
+                    console.log(err);
                 }.bind(this)
             });
         }

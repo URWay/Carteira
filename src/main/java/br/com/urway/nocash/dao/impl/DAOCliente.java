@@ -130,7 +130,6 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
                 // Encrypt AES
                 DAOCliente aes = new DAOCliente(KEY);
                 String encrypt = aes.encrypt(cliente.getSenha());
-                
                 stmt.setString(10, encrypt);
                 
                 if (stmt.executeUpdate() == 0) {
@@ -237,6 +236,7 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
                     // Verifica senha
                     DAOCliente aes = new DAOCliente(KEY);
                     String encrypt = aes.encrypt(cliente.getSenha());
+                    System.out.println(aes.decrypt("bD4D6XmDKtiKoGYr3qPW2A=="));
                     
                     stmt.setString(2, encrypt);
                     ResultSet rs = stmt.executeQuery();

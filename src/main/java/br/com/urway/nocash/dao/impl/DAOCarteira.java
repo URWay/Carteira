@@ -19,13 +19,12 @@ public class DAOCarteira extends DAOJDBC implements IDAOCarteira {
     public List<Carteira> procurar(Object... criterios) throws Exception {
         
         List<Carteira> carteiras = new ArrayList<>();
-        Cliente cliente = new Cliente();
-
+        
         try {
             try (Connection conn = getConnection();
                     PreparedStatement stmt = conn.prepareStatement("SELECT"
-                            + " t.id, c.id as cliente, c.nome as nomeCliente, "
-                            + " c.email, c.cpf, c.rg, t.saldo, t.nome"
+                            + " t.id carteira, c.id as cliente, c.nome as nomeCliente, "
+                            + " c.email, c.cpf, c.rg, t.saldo, t.nome as nomeCarteira"
                             + " FROM Carteira t"
                             + " LEFT JOIN Cliente c on t.cliente = c.id ");
                     ResultSet rs = stmt.executeQuery()) {
@@ -33,11 +32,12 @@ public class DAOCarteira extends DAOJDBC implements IDAOCarteira {
                     
                     // Carteira
                     Carteira carteira = new Carteira();
-                    carteira.setId(rs.getInt("id"));                    
+                    carteira.setId(rs.getInt("carteira"));                    
                     carteira.setSaldo(rs.getDouble("saldo"));
-                    carteira.setNome(rs.getString("nome"));
+                    carteira.setNome(rs.getString("nomeCarteira"));
                     
                     // Cliente
+                    Cliente cliente = new Cliente();
                     cliente.setId(rs.getInt("cliente"));
                     cliente.setNome(rs.getString("nomeCliente"));
                     cliente.setEmail(rs.getString("email"));

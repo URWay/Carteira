@@ -12,6 +12,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,7 +32,31 @@ import javax.ws.rs.DELETE;
 public class ClienteService {
     /** Instância do logger **/
     private static final Logger LOGGER = Logger.getLogger(UsuarioService.class.getName());
-
+    
+    
+    @Path("/obter/{param}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obter(@PathParam("param")int id) throws Exception {
+        
+        Cliente cliente;
+        
+        try{
+            IDAOCliente dao = DAOFactory.getClienteDAO();
+            cliente = dao.obter(id);
+        } catch(Exception ex){
+            LOGGER.log(Level.SEVERE, "Falha na execução do DAO de Carteira", ex);
+            LOGGER.log(Level.SEVERE, "Falha na execução do DAO de Usuario", ex);
+            Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
+                            .entity("Ocorreu uma falha ao buscar usuarios. "
+                                            + "Verifique o log do servidor para maiores detalhes").build();
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+        
+        return Response.ok(cliente).build();
+        
+    }
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getClientes(){
