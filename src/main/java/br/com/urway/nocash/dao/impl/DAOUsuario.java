@@ -112,11 +112,11 @@ public class DAOUsuario extends DAOJDBC implements IDAOUsuario {
         try {
             
             try (Connection conn = getConnection()) {
-                    PreparedStatement stmt = conn.prepareStatement("select top(1) * from Uusario where email = ? AND senha = ?");
+                    PreparedStatement stmt = conn.prepareStatement("select top(1) * from Usuario where email = ? AND senha = ?");
                     stmt.setString(1, usuario.getEmail());
                     stmt.setString(2, usuario.getSenha());
-                    ResultSet rs = stmt.executeQuery();
                     System.out.println(stmt);
+                    ResultSet rs = stmt.executeQuery();
                     while (rs.next()) {
                         retornoUsuario.setId(rs.getInt("id"));
                         System.out.println(rs.getInt("id"));
