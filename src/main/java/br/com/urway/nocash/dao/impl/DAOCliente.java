@@ -100,6 +100,7 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
     public void inserir(Cliente cliente) throws Exception {
 
         try {
+            
             try (Connection conn = getConnection();
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO"
                             + " Cliente"
@@ -117,6 +118,10 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
                     Logger.getLogger(DAOCliente.class.getName())
                             .log(Level.SEVERE, null, "E-mail inválido");
                     throw new SQLException("E-mail inválido");
+                }
+                
+                if(verificaEmail(email)) {
+                    throw new SQLException("E-mail já cadastrado!");
                 }
                 
                 stmt.setString(3, email);
@@ -269,14 +274,11 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
         
         try {
             
-            JSONObject object = new JSONObject(email);
-            
             try (Connection conn = getConnection()) {
                    PreparedStatement stmt = 
                            conn.prepareStatement("select top(1) email from Cliente where email = ?");
                    
-                   String emailV = object.getString("email");
-                   boolean isEmail = valid.isEmail(emailV);
+                   boolean isEmail = valid.isEmail(email);
                    
                    if(!isEmail){
                         Logger.getLogger(DAOCliente.class.getName())
@@ -284,7 +286,7 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
                         throw new SQLException("E-mail inválido");
                     }
                    
-                   stmt.setString(1, emailV);
+                   stmt.setString(1, email);
                    ResultSet rs = stmt.executeQuery();
 
                    retorno = rs.next();
