@@ -47,7 +47,7 @@
                             </a>
                         </div>
                         <div class="login-form">
-                            <form action="" method="post">
+                            <form>
                                 <div class="form-group">
                                     <label>Endereço de e-mail</label>
                                     <input class="au-input au-input--full" id="email" type="email" name="email" placeholder="Email" required>
@@ -56,8 +56,8 @@
                                     <label>Senha</label>
                                     <input class="au-input au-input--full" id="senha" type="password" name="senha" placeholder="Password" required>
                                 </div>
-                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="button" onClick="checkLogin()">Login</button>
                             </form>
+                            <button class="au-btn au-btn--block au-btn--green m-b-20" onClick="login()">Login</button>
                             <div class="register-link">
                                 <p>
                                     Não possui uma conta?
@@ -94,30 +94,45 @@
     </script>
 
     <!-- Main JS-->
-    <script src="js/main.js">
+    <script src="js/main.js"></script>
+    <script>
     $('button').button();
-        function checkLogin () {
-
+    function login() {
             $.ajax({
                 type: "POST",
-                url: 'http://localhost:8080/nocash/ws/usuarios/login', dataType: "json",
-                data: JSON.stringify({email: $("#email").val(),
-                    senha: $("#senha").val()}),
+                url: '/nocash/ws/clientes/login', dataType: "json",
+                data: JSON.stringify({
+                    email: $("#email").val(),
+                    senha: $("#senha").val()
+                }),
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 success: function (data, textStatus, response) {
-                    console.log(response.getAllResponseHeaders());
-                    console.log(response.getResponseHeader("Set-Cookie"));
-                    console.log(response);
+
+                    console.log(response.responseJSON);
+                    var cliente = response.responseJSON;
+                    if(cliente.id > 0 && typeof cliente.id === 'number'){
+                        sessionStorage.setItem("id", cliente.id);
+                        sessionStorage.setItem("nome", cliente.nome);
+                        sessionStorage.setItem("email", cliente.email);
+                        sessionStorage.setItem("sobrenome", cliente.sobrenome);
+                        sessionStorage.setItem("cep", cliente.cep);
+                        sessionStorage.setItem("cpf", cliente.cpf);
+                        sessionStorage.setItem("rg", cliente.rg);
+                        sessionStorage.setItem("sexo", cliente.sexo);
+                        sessionStorage.setItem("tel", cliente.tel);
+                        sessionStorage.setItem("cel", cliente.cel);
+                        document.location.href = "/nocash/index.html";
+                    }
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log(err);
                 }.bind(this)
             });
         }
-
     </script>
+    
 
 </body>
 
