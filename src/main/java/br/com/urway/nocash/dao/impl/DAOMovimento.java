@@ -190,7 +190,7 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                             + " d.id as 'idDestino', d.saldo as 'saldoDestino', d.nome as 'nomeDestino'"
                             + " FROM Movimento m"
                             + " LEFT JOIN Carteira o ON o.id = m.carteiraOrigem"
-                            + " LEFT JOIN Carteira d on d.id = m.carteiraOrigem"
+                            + " LEFT JOIN Carteira d on d.id = m.carteiraDestino"
                             + " WHERE m.carteiraDestino = ?"
                             + " ORDER BY dtMovimento")){
                     stmt.setInt(1,id);
@@ -240,7 +240,7 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                             + " d.id as 'idDestino', d.saldo as 'saldoDestino', d.nome as 'nomeDestino'"
                             + " FROM Movimento m"
                             + " LEFT JOIN Carteira o ON o.id = m.carteiraOrigem"
-                            + " LEFT JOIN Carteira d on d.id = m.carteiraOrigem"
+                            + " LEFT JOIN Carteira d on d.id = m.carteiraDestino"
                             + " WHERE m.carteiraOrigem = ?"
                             + " ORDER BY dtMovimento")){
                     stmt.setInt(1,id);
