@@ -1104,7 +1104,7 @@
     console.log(error);
   }
 
-
+/*
   try {
 
     //pie chart
@@ -1153,6 +1153,7 @@
   } catch (error) {
     console.log(error);
   }
+*/
 
   try {
 

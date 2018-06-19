@@ -58,12 +58,13 @@
                                 </div>
                             </form>
                             <button class="au-btn au-btn--block au-btn--green m-b-20" onClick="login()">Login</button>
-                            <div class="register-link">
+                            <!--<div class="register-link">
                                 <p>
                                     Não possui uma conta?
                                     <a href="registro.html">Faça o cadastro aqui!</a>
                                 </p>
                             </div>
+                            -->
                         </div>
                     </div>
                 </div>
@@ -112,25 +113,58 @@
 
                     console.log(response.responseJSON);
                     var cliente = response.responseJSON;
-                    if(cliente.id > 0 && typeof cliente.id === 'number'){
-                        sessionStorage.setItem("id", cliente.id);
-                        sessionStorage.setItem("nome", cliente.nome);
-                        sessionStorage.setItem("email", cliente.email);
-                        sessionStorage.setItem("sobrenome", cliente.sobrenome);
-                        sessionStorage.setItem("cep", cliente.cep);
-                        sessionStorage.setItem("cpf", cliente.cpf);
-                        sessionStorage.setItem("rg", cliente.rg);
-                        sessionStorage.setItem("sexo", cliente.sexo);
-                        sessionStorage.setItem("tel", cliente.tel);
-                        sessionStorage.setItem("cel", cliente.cel);
-                        document.location.href = "/nocash/index.html";
+                    if(cliente.id > 0){
+                        /*localStorage.setItem("id", cliente.id);
+                        localStorage.setItem("nome", cliente.nome);
+                        localStorage.setItem("email", cliente.email);
+                        localStorage.setItem("sobrenome", cliente.sobrenome);
+                        localStorage.setItem("cep", cliente.cep);
+                        localStorage.setItem("cpf", cliente.cpf);
+                        localStorage.setItem("rg", cliente.rg);
+                        localStorage.setItem("sexo", cliente.sexo);
+                        localStorage.setItem("tel", cliente.tel);
+                        localStorage.setItem("cel", cliente.cel);*/
+                        setCookie('id', cliente.id, 1);
+                        setCookie('nome', cliente.nome, 1);
+                        setCookie('email', cliente.email, 1);
+                        setCookie('sobrenome', cliente.sobrenome, 1);
+                        setCookie('cep', cliente.cep, 1);
+                        setCookie('cpf', cliente.cpf, 1);
+                        setCookie('rg', cliente.rg, 1);
+                        setCookie('sexo', cliente.sexo, 1);
+                        setCookie('tel', cliente.tel, 1);
+                        setCookie('cel', cliente.cel, 1);
                     }
-                }.bind(this),
+                },
                 error: function (xhr, status, err) {
                     console.log(err);
-                }.bind(this)
+                },
+                complete: function (data) {
+                document.location.href = "/nocash/index.html";
+               }
             });
         }
+        function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
     </script>
     
 
