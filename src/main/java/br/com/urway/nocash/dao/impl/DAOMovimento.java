@@ -6,6 +6,7 @@ package br.com.urway.nocash.dao.impl;
 import br.com.urway.nocash.dao.DAOJDBC;
 import br.com.urway.nocash.dao.interf.IDAOMovimento;
 import br.com.urway.nocash.model.Carteira;
+import br.com.urway.nocash.model.Cliente;
 import br.com.urway.nocash.model.Movimento;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -285,8 +286,8 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
             try (Connection conn = getConnection();
                     PreparedStatement stmt = conn.prepareStatement("SELECT"
                             + " m.id, m.carteiraOrigem, m.carteiraDestino, m.nrDocumento, m.vlBRUTO, m.vlLiquido, m.vlDesc, m.dtMovimento,"
-                            + " o.id as 'idOrigem', o.saldo as 'saldoOrigem', o.nome as 'nomeOrigem',"
-                            + " d.id as 'idDestino', d.saldo as 'saldoDestino', d.nome as 'nomeDestino'"
+                            + " o.id as 'idOrigem', o.saldo as 'saldoOrigem', o.nome as 'nomeOrigem', o.cliente as 'idClienteOrigem',"
+                            + " d.id as 'idDestino', d.saldo as 'saldoDestino', d.nome as 'nomeDestino', d.cliente as 'idClienteDestino'"
                             + " FROM Movimento m"
                             + " LEFT JOIN Carteira o ON o.id = m.carteiraOrigem"
                             + " LEFT JOIN Carteira d on d.id = m.carteiraDestino"
@@ -305,12 +306,18 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                         carteiraOrigem.setId(rs.getInt("idOrigem"));
                         carteiraOrigem.setSaldo(rs.getDouble("saldoOrigem"));
                         carteiraOrigem.setNome(rs.getString("nomeOrigem"));
+                        Cliente clienteOrigem = new Cliente();
+                            clienteOrigem.setId(rs.getInt("idClienteOrigem"));
+                        carteiraOrigem.setCliente(clienteOrigem);
                     movimento.setCarteiraOrigem(carteiraOrigem);
                     
                     Carteira carteiraDestino = new Carteira();
                         carteiraDestino.setId(rs.getInt("idDestino"));
                         carteiraDestino.setSaldo(rs.getDouble("saldoDestino"));
                         carteiraDestino.setNome(rs.getString("nomeDestino"));
+                        Cliente clienteDestino = new Cliente();
+                            clienteDestino.setId(rs.getInt("idClienteDestino"));
+                        carteiraDestino.setCliente(clienteDestino);
                     movimento.setCarteiraDestino(carteiraDestino);
                     
                     movimento.setNrDocumento(rs.getString("nrDocumento"));
