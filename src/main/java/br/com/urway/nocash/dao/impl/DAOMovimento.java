@@ -301,16 +301,18 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                     
                     Movimento movimento = new Movimento();
                     movimento.setId(rs.getInt("id"));
-                    movimento.setCarteiraOrigem(new Carteira());
-                        movimento.getCarteiraOrigem().setId(rs.getInt("idOrigem"));
-                        movimento.getCarteiraOrigem().setSaldo(rs.getDouble("saldoOrigem"));
-                        movimento.getCarteiraOrigem().setNome(rs.getString("nomeOrigem"));
-                        
-                    movimento.setCarteiraDestino(new Carteira());
-                        movimento.getCarteiraOrigem().setId(rs.getInt("idDestino"));
-                        movimento.getCarteiraOrigem().setSaldo(rs.getDouble("saldoDestino"));
-                        movimento.getCarteiraOrigem().setNome(rs.getString("nomeDestino"));
-                   
+                    Carteira carteiraOrigem = new Carteira();
+                        carteiraOrigem.setId(rs.getInt("idOrigem"));
+                        carteiraOrigem.setSaldo(rs.getDouble("saldoOrigem"));
+                        carteiraOrigem.setNome(rs.getString("nomeOrigem"));
+                    movimento.setCarteiraOrigem(carteiraOrigem);
+                    
+                    Carteira carteiraDestino = new Carteira();
+                        carteiraDestino.setId(rs.getInt("idDestino"));
+                        carteiraDestino.setSaldo(rs.getDouble("saldoDestino"));
+                        carteiraDestino.setNome(rs.getString("nomeDestino"));
+                    movimento.setCarteiraDestino(carteiraDestino);
+                    
                     movimento.setNrDocumento(rs.getString("nrDocumento"));
                     movimento.setVlBruto(rs.getDouble("vlBRUTO"));
                     movimento.setVlLiquido(rs.getDouble("vlLIQUIDO"));
