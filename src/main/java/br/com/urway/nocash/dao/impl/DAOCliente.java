@@ -100,6 +100,11 @@ public class DAOCliente extends DAOJDBC implements IDAOCliente {
     public void inserir(Cliente cliente) throws Exception {
 
         try {
+            
+            if(verificaEmail(cliente.getEmail())) {
+                throw new SQLException("E-mail já cadastrado!");
+            }
+            
             try (Connection conn = getConnection();
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO"
                             + " Cliente"
