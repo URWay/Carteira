@@ -103,4 +103,17 @@ public class MovimentoService {
         }
     } 
     
+    @Path("/cliente/{param}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response byCliente(@PathParam("param") int id){
+        try{
+            List<Movimento> mov;
+            IDAOMovimento dao = DAOFactory.getMovimentoDAO();
+            mov = dao.getByCliente(id);
+            return Response.ok(mov).build();
+        } catch(Exception ex){
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+    }
 }
