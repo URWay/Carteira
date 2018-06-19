@@ -288,7 +288,6 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                             + " o.id as 'idOrigem', o.saldo as 'saldoOrigem', o.nome as 'nomeOrigem',"
                             + " d.id as 'idDestino', d.saldo as 'saldoDestino', d.nome as 'nomeDestino'"
                             + " FROM Movimento m"
-                            + " INNER JOIN Cliente c ON d.cliente = c.id"
                             + " LEFT JOIN Carteira o ON o.id = m.carteiraOrigem"
                             + " LEFT JOIN Carteira d on d.id = m.carteiraDestino"
                             + " WHERE d.cliente = ? OR o.cliente = ?"
