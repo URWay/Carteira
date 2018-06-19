@@ -294,7 +294,7 @@ public class DAOMovimento extends DAOJDBC implements IDAOMovimento {
                             + " WHERE d.cliente = ? OR o.cliente = ?"
                             + " ORDER BY dtMovimento")){
                     stmt.setInt(1,id);
-                    
+                    stmt.setInt(2,id);
             
                     ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
